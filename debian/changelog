@@ -1,0 +1,11 @@
+com.github.mubitosh.qrshare (0.2.0) xenial; urgency=medium
+
+  * Updated all app references to RNN style
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 27 Aug 2017 20:24:00 +0530
+
+com.github.mubitosh.qrshare (0.1.19) xenial; urgency=medium
+
+  * Initial release
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Fri, 25 Aug 2017 23:20:00 +0530

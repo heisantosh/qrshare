@@ -1,0 +1,5 @@
+build/*
+*.c
+*.h
+pokicons.go
+data/*.gresource.xml
