@@ -11,6 +11,7 @@ go_project_home=$GOPATH/src/github.com/mubitosh/qrshare
 cd $GOPATH && mkdir -p src pkg bin $go_project_home
 
 go get -u github.com/golang/dep/cmd/dep
+export PATH=$PATH:$GOPATH/bin
 
 mv vendor $go_project_home/
 mv *.go *.c *.h $go_project_home/
