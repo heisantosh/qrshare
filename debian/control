@@ -5,6 +5,7 @@ Maintainer: Santosh Heigrujam <santosh.hei@gmail.com>
 Build-Depends: debhelper (>= 9),
                libgtk-3-dev,
                meson,
+               golang-go,
                python
 Standards-Version: 3.9.3
 
