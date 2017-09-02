@@ -24,7 +24,8 @@ func getIPAddress() string {
 }
 
 func genQRCode(baseName, qrImage, port string) {
-	url := "http://" + getIPAddress() + ":" + port + "/" + url.PathEscape(baseName)
+	u, _ := url.Parse(baseName)
+	url := "http://" + getIPAddress() + ":" + port + "/" + u.EscapedPath()
 	log.Println("URL:", url)
 	cmdStr := `qrencode -o ` + qrImage + ` -m 0 -s 10 "` + url + `"`
 	log.Println("qrencode command:", cmdStr)
