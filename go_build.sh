@@ -6,15 +6,6 @@ python gen-gresource-go.py
 bash compile-gresource.sh
 
 export GOPATH="${MESON_SOURCE_ROOT}"
-export GOROOT="${MESON_SOURCE_ROOT}"/go
-export PATH=$GOROOT/bin:$PATH
-
-cd "${MESON_SOURCE_ROOT}"
-if [ ! -f go1.9.linux-amd64.tar.gz ]; then
-	curl -O https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz
-fi
-tar -C $GOPATH -xzf go1.9.linux-amd64.tar.gz
-
 go_project_home=$GOPATH/src/github.com/mubitosh/qrshare
 
 cd $GOPATH && mkdir -p src pkg bin $go_project_home
