@@ -30,22 +30,22 @@ func (f *srvFlag) get() bool {
 }
 
 type tcpKeepAliveListener struct {
-  	*net.TCPListener
-  }
-  
+	*net.TCPListener
+}
+
 func (ln tcpKeepAliveListener) Accept() (c net.Conn, err error) {
-  	tc, err := ln.AcceptTCP()
-  	if err != nil {
-  		return
-  	}
-  	tc.SetKeepAlive(true)
-  	tc.SetKeepAlivePeriod(3 * time.Minute)
-  	return tc, nil
+	tc, err := ln.AcceptTCP()
+	if err != nil {
+		return
+	}
+	tc.SetKeepAlive(true)
+	tc.SetKeepAlivePeriod(3 * time.Minute)
+	return tc, nil
 }
 
 type FileServer struct {
 	http.Server
-	port int
+	port     int
 	listener net.Listener
 }
 
@@ -97,5 +97,5 @@ func (fs *FileServer) start(app *App, window *gtk.ApplicationWindow) error {
 	}()
 
 	log.Println("Starting file sharing")
-  	return fs.Serve(tcpKeepAliveListener{fs.listener.(*net.TCPListener)})
+	return fs.Serve(tcpKeepAliveListener{fs.listener.(*net.TCPListener)})
 }

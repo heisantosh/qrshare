@@ -3,22 +3,23 @@ package main
 import (
 	"github.com/gotk3/gotk3/gtk"
 	"github.com/gotk3/gotk3/pango"
+	
 	"log"
+	"net/url"
 	"os/exec"
 	"path"
-	"strings"
-	"net/url"
 	"strconv"
+	"strings"
 )
 
 const (
-	NO_NETWORK = "No Network"
+	NO_NETWORK      = "No Network"
 	NO_QR_GENERATED = "No QR Generated"
-	NO_ERROR = ""
+	NO_ERROR        = ""
 )
 
 // getIPAddress returns the IP address assigned to default interface.
-func getIPAddress() (string, string){
+func getIPAddress() (string, string) {
 	cmdStr := `ip route get "$(ip route show to 0/0 | grep -oP '(?<=via )\S+')" | grep -oP '(?<=src )\S+'`
 	out, err := exec.Command("bash", "-c", cmdStr).Output()
 	if err != nil {
@@ -70,7 +71,7 @@ func alertViewNew(errStr string) *gtk.Grid {
 	descriptionLabel.SetXAlign(0)
 	descriptionLabel.SetVAlign(gtk.ALIGN_START)
 
-	actionButton, _ := gtk.LinkButtonNewWithLabel("https://appcenter.elementary.io/" + APP_ID,
+	actionButton, _ := gtk.LinkButtonNewWithLabel("https://appcenter.elementary.io/"+APP_ID,
 		"Go to AppCenter...")
 	if errStr == NO_NETWORK {
 		actionButton, _ = gtk.LinkButtonNewWithLabel("ettings://settings/network",
