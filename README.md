@@ -2,9 +2,12 @@
 
 QR Share allows you to easily share files by scanning a QR code.
 
-![QR Share main window](https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-main-window.png)
-
-![QR Share QR window](https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-qr-window.png)
+<table cellspacing="0" cellpadding="0" style="border:none">
+	<tr>
+		<td><img src="https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-main-window.png"></td>
+		<td><img src="https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-qr-window.png"></td>
+	</tr>
+</table>
 
 To stop sharing click the "Stop share" button. Sharing stops and the application window is closed automatically if no one is downloading the shared file.
 
@@ -18,6 +21,7 @@ $ mkdir -p ~/Devel/debs/qrshare && cd ~/Devel/debs/qrshare
 $ git clone https://github.com/mubitosh/qrshare.git
 $ mv qrshare com.github.mubitosh.qrshare_RELEASE_NUMBER && cd com.github.mubitosh.qrshare_RELEASE_NUMBER
 $ dpkg-buildpackage
+$ sudo apt install qrencode
 $ sudo dpkg -i ../com.github.mubitosh.qrshare_RELEASE_NUMBER_amdd64.deb
 ```
 
