@@ -34,7 +34,7 @@ The components are a file server, a contractor file to have an option in the rig
 
 ### About downloading files:
 
-As per release `0.2.0`, the sharing will stop in the scenario where a video/audio file is being streamed and not being downloaded. During the stream the client may buffer the contents and stay idle. The server will assume there is no activity if no download activity happens within 30 seconds (default value) and it will stop sharing.
+The sharing will stop after 30 seconds in the scenario where a video/audio file is being streamed and not being downloaded. During the stream the client may buffer the contents and stay idle. The server will assume there is no activity if no download activity happens within 30 seconds (default value) and it will stop sharing.
 If the file is being downloaded, the server will stop only after the download is complete and a grace of 30 seconds.
 
 ### Icons in the app
