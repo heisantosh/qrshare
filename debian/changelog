@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.4.1) xenial; urgency=medium
+
+  * Use golang package github.com/boombuler/barcode instead of qrencode command to generate QR code
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 4 Sep 2017 9:50:00 +0530
+
 com.github.mubitosh.qrshare (0.4.0) xenial; urgency=medium
 
   * Allow to open multiple windows showing QR code
