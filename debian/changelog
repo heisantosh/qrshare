@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.4.2) xenial; urgency=medium
+
+  * Updated README with links to package/libs used in the app
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Tue, 5 Sep 2017 0:07:00 +0530
+
 com.github.mubitosh.qrshare (0.4.1) xenial; urgency=medium
 
   * Use golang package github.com/boombuler/barcode instead of qrencode command to generate QR code
