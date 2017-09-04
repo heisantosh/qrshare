@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/gotk3/gotk3/gtk"
-	"github.com/gotk3/gotk3/pango"
 	"github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/qr"
-	
+	"github.com/gotk3/gotk3/gtk"
+	"github.com/gotk3/gotk3/pango"
+
 	"image/png"
-	"os"
 	"log"
 	"net/url"
+	"os"
 	"os/exec"
 	"path"
 	"strconv"
@@ -42,7 +42,7 @@ func genQRCode(baseName, qrImage, port string) string {
 	u, _ := url.Parse(baseName)
 	url := "http://" + ipAddr + ":" + port + "/" + u.EscapedPath()
 	log.Println("URL:", url)
-	
+
 	qrCode, _ := qr.Encode(url, qr.M, qr.Auto)
 	qrCode, _ = barcode.Scale(qrCode, 300, 300)
 	file, _ := os.Create(qrImage)
