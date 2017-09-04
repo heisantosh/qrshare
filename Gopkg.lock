@@ -3,6 +3,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/boombuler/barcode"
+  packages = [".","qr","utils"]
+  revision = "56ef0af91246fb5279df4f87bc3daf1bf7cb9e89"
+
+[[projects]]
+  branch = "master"
   name = "github.com/gotk3/gotk3"
   packages = ["cairo","gdk","glib","gtk","pango"]
   revision = "801ee6787a41915d7259fa04c8d891eda7f46ce3"
@@ -10,6 +16,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b99090e340440e2f1c562e20124b53ba591222cc1e871a930dece4f4fc6a1b92"
+  inputs-digest = "28a83f55071d9f168a68fe4a8b7848845cd057d79030211e646f81488c83bbfc"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -3,7 +3,11 @@ package main
 import (
 	"github.com/gotk3/gotk3/gtk"
 	"github.com/gotk3/gotk3/pango"
+	"github.com/boombuler/barcode"
+	"github.com/boombuler/barcode/qr"
 	
+	"image/png"
+	"os"
 	"log"
 	"net/url"
 	"os/exec"
@@ -34,16 +38,17 @@ func genQRCode(baseName, qrImage, port string) string {
 	if errStr != NO_ERROR {
 		return errStr
 	}
+
 	u, _ := url.Parse(baseName)
 	url := "http://" + ipAddr + ":" + port + "/" + u.EscapedPath()
 	log.Println("URL:", url)
-	cmdStr := `qrencode -o ` + qrImage + ` -m 0 -s 10 "` + url + `"`
-	log.Println("qrencode command:", cmdStr)
-	out, err := exec.Command("bash", "-c", cmdStr).Output()
-	if err != nil {
-		log.Println("genQRCode command Output:", string(out))
-		return NO_QR_GENERATED
-	}
+	
+	qrCode, _ := qr.Encode(url, qr.M, qr.Auto)
+	qrCode, _ = barcode.Scale(qrCode, 300, 300)
+	file, _ := os.Create(qrImage)
+	defer file.Close()
+	png.Encode(file, qrCode)
+
 	return NO_ERROR
 }
 
@@ -74,7 +79,7 @@ func alertViewNew(errStr string) *gtk.Grid {
 	actionButton, _ := gtk.LinkButtonNewWithLabel("https://appcenter.elementary.io/"+APP_ID,
 		"Go to AppCenter...")
 	if errStr == NO_NETWORK {
-		actionButton, _ = gtk.LinkButtonNewWithLabel("ettings://settings/network",
+		actionButton, _ = gtk.LinkButtonNewWithLabel("settings://settings/network",
 			"Network Settings...")
 	}
 	actionButton.SetMarginTop(24)
