@@ -21,7 +21,6 @@ $ mkdir -p ~/Devel/debs/qrshare && cd ~/Devel/debs/qrshare
 $ git clone https://github.com/mubitosh/qrshare.git
 $ mv qrshare com.github.mubitosh.qrshare_RELEASE_NUMBER && cd com.github.mubitosh.qrshare_RELEASE_NUMBER
 $ dpkg-buildpackage
-$ sudo apt install qrencode
 $ sudo dpkg -i ../com.github.mubitosh.qrshare_RELEASE_NUMBER_amdd64.deb
 ```
 
