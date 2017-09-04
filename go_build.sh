@@ -5,6 +5,7 @@ cd "${MESON_SOURCE_ROOT}"/data
 python gen-gresource-go.py
 bash compile-gresource.sh
 
+# Set up GOPATH and move all the necessary files inside the GOPATH
 export GOPATH="${MESON_SOURCE_ROOT}"
 go_project_home=$GOPATH/src/github.com/mubitosh/qrshare
 
@@ -12,6 +13,7 @@ cd $GOPATH && mkdir -p src pkg bin $go_project_home
 
 mv vendor $go_project_home/
 mv *.go *.c *.h $go_project_home/
+# So that we can run dep ensure to update the project dependencies
 mv Gopkg.* $go_project_home/
 
 go version
