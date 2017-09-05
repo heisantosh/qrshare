@@ -19,15 +19,57 @@ You can download the latest release of the app from [here](https://github.com/mu
 
 ## Building and installing
 
-The following instructions builds a .deb package. You can use dpkg to install the resulting package.
-Replace `RELEASE_NUMBER` with the qrshare release number you are building.
+### Clone the git repo
 
 ```bash
-$ mkdir -p ~/Devel/debs/qrshare && cd ~/Devel/debs/qrshare
+$ mkdir -p ~/Devel/debs && cd ~/Devel/debs
 $ git clone https://github.com/mubitosh/qrshare.git
-$ mv qrshare com.github.mubitosh.qrshare_RELEASE_NUMBER && cd com.github.mubitosh.qrshare_RELEASE_NUMBER
+```
+
+
+### Generate the GResource file and the bindings
+
+This will generate the gresource.xml, the C source file, the C header file and a go file. The go file contains the paths to the gresources.
+
+```bash
+$ cd ~/Devel/debs/qrshare/data
+$ python gen-gresource-go.py
+$ bash compile-gresource.sh
+```
+
+### Compile & Run the app
+
+[dep](https://github.com/golang/dep) tool is used to make sure the dependencies are in place. Make sure to have it installed. Then we can run go build to build the binary.
+
+```bash
+$ cd ~/Devel/debs/qrshare
+$ dep ensure
+$ go build -ldflags="-s -w" -i -o com.github.mubitosh.qrshare -tags gtk_3_18
+$ ./com.github.mubitosh.qrshare
+```
+
+### Building a deb package
+
+To build a package, copy the binary built in the previous step to the bin directory. Then run dpkg-buildpackage to get a .deb file.
+
+```bash
+$ cd ~/Devel/debs/qrshare
+$ cp com.github.mubitosh.qrshare ./bin/
 $ dpkg-buildpackage
-$ sudo dpkg -i ../com.github.mubitosh.qrshare_RELEASE_NUMBER_amdd64.deb
+```
+
+### Installing
+
+To install the package dpkg can be used as below. Replace the RELEASE_NUMBER with the correct value.
+
+```bash
+$ sudo dpkg -i ~/Devel/debs/com.github.mubitosh.qrshare_RELEASE_NUMBER_amdd64.deb
+```
+
+### Uninstalling
+
+```bash
+$ sudo dpkg -r com.github.mubitosh.qrshare
 ```
 
 This project uses dep [https://github.com/golang/dep](https://github.com/golang/dep) for golang dependency management.
