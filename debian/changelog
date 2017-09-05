@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.4.4) xenial; urgency=medium
+
+  * Added git as dependency as go get requires it
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Tue, 5 Sep 2017 7:21:00 +0530
+
 com.github.mubitosh.qrshare (0.4.3) xenial; urgency=medium
 
   * Added step to go get dep in go_build.sh
