@@ -7,7 +7,6 @@ bash compile-gresource.sh
 
 # Set up GOPATH and move all the necessary files inside the GOPATH
 export GOPATH="${MESON_SOURCE_ROOT}"
-export PATH=$PATH:$GOPATH/bin
 
 go_project_home=$GOPATH/src/github.com/mubitosh/qrshare
 
@@ -22,11 +21,11 @@ go env
 
 cd $go_project_home
 
-go get -u github.com/golang/dep/cmd/dep
-echo "dep is installed at" $(which dep)
+# go get -u github.com/golang/dep/cmd/dep
+
 ls -l $GOPATH/bin
 
-$(which dep) ensure || $GOPATH/bin/dep ensure || echo "dep command not in PATH" 
+$GOPATH/bin/dep ensure
 
 go build -ldflags="-s -w" -i -o com.github.mubitosh.qrshare -tags gtk_3_18
 mv com.github.mubitosh.qrshare $GOPATH/bin/com.github.mubitosh.qrshare
