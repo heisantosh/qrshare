@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.5.0) xenial; urgency=medium
+
+  * Using the app binary built locally instead of building on houston
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Tue, 5 Sep 2017 14:39:00 +0530
+
 com.github.mubitosh.qrshare (0.4.5) xenial; urgency=medium
 
   * Bundled dep binary
