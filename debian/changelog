@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.4.3) xenial; urgency=medium
+
+  * Added step to go get dep in go_build.sh
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Tue, 5 Sep 2017 6:59:00 +0530
+
 com.github.mubitosh.qrshare (0.4.2) xenial; urgency=medium
 
   * Updated README with links to package/libs used in the app

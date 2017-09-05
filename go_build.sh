@@ -19,6 +19,10 @@ mv Gopkg.* $go_project_home/
 go version
 
 cd $go_project_home
-dep ensure
+go get -u github.com/golang/dep/cmd/dep
+echo "dep is installed at" $(which dep)
+ll $GOPATH/bin
+which dep
+if [ $? == 1 ]; do $GOPATH/bin/dep ensure; fi
 go build -ldflags="-s -w" -i -o com.github.mubitosh.qrshare -tags gtk_3_18
 mv com.github.mubitosh.qrshare $GOPATH/bin/com.github.mubitosh.qrshare
