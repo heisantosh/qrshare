@@ -7,26 +7,9 @@ import (
 	"flag"
 	"log"
 	"os"
-	// "os/exec"
-	// "strings"
 )
 
 var app *App
-
-// Not sure if a dark background makes it harder to scan QR code??!!
-/*
-func setDarkTheme() {
-	cmdStr := `gsettings get org.gnome.desktop.interface gtk-theme | tr -d "'"`
-	out, err := exec.Command("bash", "-c", cmdStr).Output()
-	if err != nil {
-		log.Println("Command:", cmdStr)
-		log.Println("Output:", out)
-		log.Println("Failed to set dark theme:", err)
-	}
-	darkTheme := strings.Trim(string(out), " \n") + ":dark"
-	os.Setenv("GTK_THEME", darkTheme)
-}
-*/
 
 func init() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
@@ -41,7 +24,6 @@ func init() {
 	app.file = flag.String("file", "", "Path of the file to be shared")
 	app.inactive = flag.Int("inactive", 30,
 		"Sharing is stopped if no sharing activity happens within a period of inactive seconds")
-	// setDarkTheme()
 }
 
 func main() {

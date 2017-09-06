@@ -85,8 +85,7 @@ func alertViewNew(errStr string) *gtk.Grid {
 	actionButton.SetMarginTop(24)
 	actionButton.SetHAlign(gtk.ALIGN_END)
 
-	image, _ := gtk.ImageNew()
-	image.SetFromIconName("system-software-install", gtk.ICON_SIZE_DIALOG)
+	image, _ := gtk.ImageNewFromIconName("system-software-install", gtk.ICON_SIZE_DIALOG)
 	if errStr == NO_NETWORK {
 		image.SetFromIconName("network-error", gtk.ICON_SIZE_DIALOG)
 	}
