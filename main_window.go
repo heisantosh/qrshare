@@ -31,10 +31,12 @@ func mainWindowNew(app *App) *gtk.ApplicationWindow {
 	subtitleLabel.SetHExpand(true)
 
 	browseButton := optionButtonNew("Select a file",
-		"Click here to select a file for sharing")
+		"Click here to select a file for sharing",
+		"text-x-preview")
 
 	rightClickButton := optionButtonNew("Right Click in Files",
-		"Right click on any file in Files and select the QR Share option")
+		"Right click on any file in Files and select the QR Share option",
+		"system-file-manager")
 
 	box, _ := gtk.BoxNew(gtk.ORIENTATION_VERTICAL, 9)
 	box.SetHAlign(gtk.ALIGN_CENTER)
