@@ -26,17 +26,6 @@ $ mkdir -p ~/Devel/debs && cd ~/Devel/debs
 $ git clone https://github.com/mubitosh/qrshare.git
 ```
 
-
-### Generate the GResource file and the bindings
-
-This will generate the gresource.xml, the C source file, the C header file and a go file. The go file contains the paths to the gresources.
-
-```bash
-$ cd ~/Devel/debs/qrshare/data
-$ python gen-gresource-go.py
-$ bash compile-gresource.sh
-```
-
 ### Compile & Run the app
 
 [dep](https://github.com/golang/dep) tool is used to make sure the dependencies are in place. Make sure to have it installed. Then we can run go build to build the binary.
@@ -44,8 +33,8 @@ $ bash compile-gresource.sh
 ```bash
 $ cd ~/Devel/debs/qrshare
 $ dep ensure
-$ go build -ldflags="-s -w" -i -o com.github.mubitosh.qrshare -tags gtk_3_18
-$ ./com.github.mubitosh.qrshare
+$ go build -ldflags="-s -w" -i -o ./bin/com.github.mubitosh.qrshare -tags gtk_3_18
+$ ./bin/com.github.mubitosh.qrshare
 ```
 
 ### Building a deb package
@@ -54,7 +43,6 @@ To build a package, copy the binary built in the previous step to the bin direct
 
 ```bash
 $ cd ~/Devel/debs/qrshare
-$ cp com.github.mubitosh.qrshare ./bin/
 $ dpkg-buildpackage
 ```
 
@@ -90,7 +78,3 @@ This app was built using [elementary OS](https://elementary.io) Loki. It should 
 
 The sharing will stop after 30 seconds in the scenario where a video/audio file is being streamed and not being downloaded. During the stream the client may buffer the contents and stay idle. The server will assume there is no activity if no download activity happens within 30 seconds (default value) and it will stop sharing.
 If the file is being downloaded, the server will stop only after the download is complete and a grace of 30 seconds.
-
-### Icons in the app
-
-The pokemon icons used in the app are from [The Artificial](http://theartificial.nl/pokemonicons/).
