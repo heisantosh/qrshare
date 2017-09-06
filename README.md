@@ -4,7 +4,7 @@ QR Share allows you to easily share files by scanning a QR code.
 
 <table cellspacing="0" cellpadding="0" style="border:none">
 	<tr>
-		<td><img src="https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-main-window.png"></td>
+		<td><img src="https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-app.png"></td>
 		<td><img src="https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-qr-window.png"></td>
 	</tr>
 </table>
