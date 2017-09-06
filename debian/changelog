@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.6.0) xenial; urgency=medium
+
+  * Use icons available in system instead of Pokemon icons
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Wed, 6 Sep 2017 8:30:00 +0530
+
 com.github.mubitosh.qrshare (0.5.0) xenial; urgency=medium
 
   * Using the app binary built locally instead of building on houston
