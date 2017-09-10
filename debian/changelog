@@ -1,3 +1,15 @@
+com.github.mubitosh.qrshare (0.6.2) xenial; urgency=medium
+
+  * Build go binary in AppCenter backend
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 10 Sep 2017 12:06:00 +0530
+
+com.github.mubitosh.qrshare (0.6.1) xenial; urgency=medium
+
+  * New screenshot in appstream data
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Wed, 6 Sep 2017 8:55:00 +0530
+
 com.github.mubitosh.qrshare (0.6.0) xenial; urgency=medium
 
   * Use icons available in system instead of Pokemon icons
