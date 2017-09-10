@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.6.4) xenial; urgency=medium
+
+  * Not using dep ensure since the dependencies are already vendored
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 10 Sep 2017 19:15:00 +0530
+
 com.github.mubitosh.qrshare (0.6.3) xenial; urgency=medium
 
   * Have a copy of dep so that we don't need to access github
