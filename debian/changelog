@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.6.3) xenial; urgency=medium
+
+  * Have a copy of dep so that we don't need to access github
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 10 Sep 2017 17:02:00 +0530
+
 com.github.mubitosh.qrshare (0.6.2) xenial; urgency=medium
 
   * Build go binary in AppCenter backend
