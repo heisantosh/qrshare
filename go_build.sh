@@ -14,12 +14,12 @@ export PATH=$GOPATH/go/bin:$GOPATH/bin:$PATH
 go version
 go env
 
-go get -v -u github.com/golang/dep/cmd/dep
+go install github.com/golang/dep/cmd/dep
 
 mv vendor $go_project_home/
 mv *.go $go_project_home/
 mv Gopkg.* $go_project_home/
 
-cd $go_project_home && $GOPATH/bin/dep ensure
+cd $go_project_home && dep ensure
 go build -ldflags="-s -w" -i -o com.github.mubitosh.qrshare -tags $GTK_BUILD_TAG
 mv com.github.mubitosh.qrshare $GOPATH/bin/com.github.mubitosh.qrshare
