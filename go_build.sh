@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GTK_VERSION=$(pkg-config --modversion gtk+-3.0 | tr . _ | cut -d '_' -f 1-2)
-GTK_BUILD_TAG="gtk_$(GTK_VERSION)"
+export GTK_VERSION=$(pkg-config --modversion gtk+-3.0 | tr . _ | cut -d '_' -f 1-2)
+export GTK_BUILD_TAG="gtk_$GTK_VERSION"
 
 export GOPATH="${MESON_SOURCE_ROOT}"
 go_project_home=$GOPATH/src/github.com/mubitosh/qrshare
