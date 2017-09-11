@@ -18,9 +18,23 @@ override_dh_auto_clean:
 override_dh_auto_configure:
 	mkdir -p debian/build
 	cd debian/build && meson --prefix=/usr ../..
+	mkdir -p src pkg && mkdir -p src/github.com/mubitosh/qrshare
+	mv *.go src/github.com/mubitosh/qrshare/
+	mv vendor src/github.com/mubitosh/qrshare/
+	mv Gopkg.* src/github.com/mubitosh/qrshare/
+	wget https://storage.googleapis.com/golang/go1.9.linux-amd64.tar.gz
+	tar -C . -xzf go1.9.linux-amd64.tar.gz
+	export PATH=${PWD}/go/bin:${PATH} && export GOPATH=${PWD} && \
+	go get -u github.com/golang/dep/cmd/dep
+	export PATH=${PWD}/go/bin:${GOPATH}/bin:${PATH} && export GOPATH=${PWD} && \
+	cd src/github.com/mubitosh/qrshare && dep ensure
 
 override_dh_auto_build:
-	cd debian/build && ninja -v && ninja go_build
+	cd debian/build && ninja -v
+	export PATH=${PWD}/go/bin:${PATH} && export GOPATH=${PWD} && cd src/github.com/mubitosh/qrshare && \
+	go build -v -ldflags="-s -w" -i -o com.github.mubitosh.qrshare -tags gtk_3_18
+	mv src/github.com/mubitosh/qrshare/com.github.mubitosh.qrshare bin/com.github.mubitosh.qrshare
+
 	
 override_dh_auto_test:
 	cd debian/build && ninja test
