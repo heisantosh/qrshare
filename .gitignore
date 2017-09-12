@@ -1,6 +1,0 @@
-build/*
-*.c
-*.h
-pokicons.go
-data/*.gresource.xml
-go*.tar.gz
