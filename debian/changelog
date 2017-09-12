@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.7.1) xenial; urgency=medium
+
+  * Update project build logic
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Wed, 13 Sep 2017 00:20:00 +0530
+
 com.github.mubitosh.qrshare (0.7.0) xenial; urgency=medium
 
   * Started using gb as project management tool instead of dep
