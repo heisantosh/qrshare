@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (0.6.6) xenial; urgency=medium
+
+  * Add missing dependency wget
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 12 Sep 2017 7:45:00 +0530
+
 com.github.mubitosh.qrshare (0.6.5) xenial; urgency=medium
 
   * Move go configuration and build commands to debian/rules
