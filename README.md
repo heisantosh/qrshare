@@ -19,48 +19,60 @@ You can download the latest release of the app from [here](https://github.com/mu
 
 ## Building and installing
 
-### Clone the git repo
+### Install dependencies
 
 ```bash
-$ mkdir -p ~/Devel/debs && cd ~/Devel/debs
+$ sudo apt install libgtk-3-dev meson golang-go gb
+```
+
+### Building & Installing
+
+All commands below are executed in the same directory.
+
+To build the project, check out from github and run `gb build`
+
+```bash
 $ git clone https://github.com/mubitosh/qrshare.git
+$ cd qrshare
+$ gb build -tags gtk_3_18 all
 ```
 
-### Compile & Run the app
-
-[dep](https://github.com/golang/dep) tool is used to make sure the dependencies are in place. Make sure to have it installed. Then we can run go build to build the binary.
+To run the app
 
 ```bash
-$ cd ~/Devel/debs/qrshare
-$ dep ensure
-$ go build -ldflags="-s -w" -i -o ./bin/com.github.mubitosh.qrshare -tags gtk_3_18
-$ ./bin/com.github.mubitosh.qrshare
+$ bin/qrshare-gtk_3_18
 ```
 
-### Building a deb package
-
-To build a package, copy the binary built in the previous step to the bin directory. Then run dpkg-buildpackage to get a .deb file.
+To install properly, we need to build a `.deb` package.
 
 ```bash
-$ cd ~/Devel/debs/qrshare
 $ dpkg-buildpackage
 ```
 
-### Installing
-
-To install the package dpkg can be used as below. Replace the RELEASE_NUMBER with the correct value.
+The `deb` file should be available in the parent directory of the current directory. Below is an example of building the 0.7.0 release.
 
 ```bash
-$ sudo dpkg -i ~/Devel/debs/com.github.mubitosh.qrshare_RELEASE_NUMBER_amdd64.deb
+$ ls ..
+com.github.mubitosh.qrshare_0.7.0_amd64.changes
+com.github.mubitosh.qrshare_0.7.0_amd64.deb
+com.github.mubitosh.qrshare_0.7.0.dsc
+com.github.mubitosh.qrshare_0.7.0.tar.xz
+qrshare
 ```
 
-### Uninstalling
+To install use the `dpkg` tool. The release number should vary depending upon the current release.
+
+```bash
+$ sudo dpkg -i ../com.github.mubitosh.qrshare_0.7.0_amd64.deb
+```
+
+To unistall, just the below command. This one can be executed from anywhere.
 
 ```bash
 $ sudo dpkg -r com.github.mubitosh.qrshare
 ```
 
-This project uses dep [https://github.com/golang/dep](https://github.com/golang/dep) for golang dependency management.
+This project uses [gb](https://getgb.io/) for golang project management.
 
 Go bindings for GTK3 gotk3 [https://github.com/gotk3/gotk3](https://github.com/gotk3/gotk3)
 
@@ -72,7 +84,7 @@ The components are a file server, a contractor file to have an option in the rig
 
 ## Note
 
-This app was built using [elementary OS](https://elementary.io) Loki. It should hopefully run on other Debian/Ubuntu based distros.
+This app was built using [elementary OS](https://elementary.io).
 
 ### About downloading files:
 
