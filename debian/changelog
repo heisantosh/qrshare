@@ -1,0 +1,5 @@
+com.github.mubitosh.qrshare (0.7.4) xenial; urgency=medium
+
+  * Removed .git in vendor projects so that it gets included in git commit
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Wed, 13 Sep 2017 9:55:00 +0530

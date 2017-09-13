@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=QR Share
+Exec=com.github.mubitosh.qrshare
+Comment=Share files using QR code
+Icon=com.github.mubitosh.qrshare
+Categories=GTK;Utility;
+Keywords=share;qr;download;
