@@ -1,5 +1,0 @@
-[Contractor Entry]
-Name=QR Share
-Description=Quickly share files by scanning QR code
-MimeType=!inode;
-Exec=com.github.mubitosh.qrshare -file=%f -inactive=30
