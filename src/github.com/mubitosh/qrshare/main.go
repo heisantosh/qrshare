@@ -28,7 +28,6 @@ func init() {
 
 func main() {
 	flag.Parse()
-	log.Println("File to share:", *app.file, " , inactive time:", *app.inactive)
 	app.gtkApp, _ = gtk.ApplicationNew(APP_ID,
 		glib.APPLICATION_HANDLES_COMMAND_LINE)
 	app.gtkApp.Connect("activate", app.activate)

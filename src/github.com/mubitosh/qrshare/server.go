@@ -43,6 +43,8 @@ func (ln tcpKeepAliveListener) Accept() (c net.Conn, err error) {
 	return tc, nil
 }
 
+// FileServer serves a file on a random port number. It shuts down if there
+// is no download from the server within a period of App.inactiviy seconds.
 type FileServer struct {
 	http.Server
 	port     int
@@ -85,7 +87,7 @@ func (fs *FileServer) start(app *App, window *gtk.ApplicationWindow) error {
 			if !serving.get() && !justServed.get() {
 				log.Println("Exceeded inactive time of", *app.inactive, "seconds")
 				log.Println("Stopping file sharing")
-				if app.isCmdLine {
+				if app.isContractor {
 					log.Println("App was started to display QR window only, exiting app")
 					os.Exit(0)
 				}

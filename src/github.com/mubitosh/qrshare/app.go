@@ -12,10 +12,12 @@ const (
 
 type App struct {
 	file      *string
-	inactive  *int // time in seconds
+	// Time in seconds to wait before share stops due to inactivity
+	inactive  *int
 	dataDir   string
 	image     string
-	isCmdLine bool
+	// true if the app was called using contractor
+	isContractor bool
 	gtkApp    *gtk.Application
 }
 
@@ -29,7 +31,7 @@ func (a *App) cmdLine(g *gtk.Application) {
 		a.activate(g)
 		return
 	}
-	a.isCmdLine = true
+	a.isContractor = true
 	window := qrWindowNew(a)
 	window.ShowAll()
 }

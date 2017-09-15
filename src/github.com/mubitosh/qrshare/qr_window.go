@@ -7,7 +7,6 @@ import (
 	"github.com/gotk3/gotk3/pango"
 
 	"image/png"
-	"log"
 	"net/url"
 	"os"
 	"os/exec"
@@ -41,7 +40,6 @@ func genQRCode(baseName, qrImage, port string) string {
 
 	u, _ := url.Parse(baseName)
 	url := "http://" + ipAddr + ":" + port + "/" + u.EscapedPath()
-	log.Println("URL:", url)
 
 	qrCode, _ := qr.Encode(url, qr.M, qr.Auto)
 	qrCode, _ = barcode.Scale(qrCode, 300, 300)
@@ -52,7 +50,7 @@ func genQRCode(baseName, qrImage, port string) string {
 	return NO_ERROR
 }
 
-// Naive port of AlertView widget from elementary granite library.
+// alertViewNew returns a gtk Grid similar to AlertView widget from elementary granite library.
 func alertViewNew(errStr string) *gtk.Grid {
 	titleLabel, _ := gtk.LabelNew("Unable to create QR code")
 	if errStr == NO_NETWORK {
@@ -66,9 +64,11 @@ func alertViewNew(errStr string) *gtk.Grid {
 	titleLabel.SetLineWrapMode(pango.WRAP_CHAR)
 	titleLabel.SetXAlign(0)
 
-	descriptionLabel, _ := gtk.LabelNew("Some dependant components might be missing.\nReinstall the app and try again.")
+	descriptionLabel, _ := gtk.LabelNew("Some dependant components might be missing.\n" +
+		"Reinstall the app and try again.")
 	if errStr == NO_NETWORK {
-		descriptionLabel.SetText("Connect to the same network as the device\nyou will be using to scan the QR code.")
+		descriptionLabel.SetText("Connect to the same network as the device\n" +
+			"you will be using to scan the QR code.")
 	}
 	descriptionLabel.SetHExpand(true)
 	descriptionLabel.SetLineWrap(true)
@@ -76,7 +76,7 @@ func alertViewNew(errStr string) *gtk.Grid {
 	descriptionLabel.SetXAlign(0)
 	descriptionLabel.SetVAlign(gtk.ALIGN_START)
 
-	actionButton, _ := gtk.LinkButtonNewWithLabel("https://appcenter.elementary.io/"+APP_ID,
+	actionButton, _ := gtk.LinkButtonNewWithLabel("https://appcenter.elementary.io/" + APP_ID,
 		"Go to AppCenter...")
 	if errStr == NO_NETWORK {
 		actionButton, _ = gtk.LinkButtonNewWithLabel("settings://settings/network",
@@ -112,6 +112,8 @@ func alertViewNew(errStr string) *gtk.Grid {
 	return grid
 }
 
+// qrWindowNew returns a window that displays the QR code image of the URL from
+// where the shared file can be downloaded.
 func qrWindowNew(app *App) *gtk.ApplicationWindow {
 	fileServer, _ := FileServerNew()
 	baseName := path.Base(*app.file)
@@ -127,7 +129,6 @@ func qrWindowNew(app *App) *gtk.ApplicationWindow {
 	grid.SetOrientation(gtk.ORIENTATION_VERTICAL)
 
 	if errStr != NO_ERROR {
-		log.Println(errStr)
 		grid = alertViewNew(errStr)
 		window.Add(grid)
 
@@ -152,12 +153,9 @@ func qrWindowNew(app *App) *gtk.ApplicationWindow {
 	button.SetMarginStart(12)
 	button.SetMarginEnd(12)
 	button.Connect("clicked", func() {
-		log.Println("Stopping sharing")
-		if app.isCmdLine {
-			log.Println("Closing QR window, stopping app")
+		if app.isContractor {
 			app.gtkApp.Quit()
 		} else {
-			log.Println("Closing QR window, back to main window")
 			window.Destroy()
 		}
 	})
