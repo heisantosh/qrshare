@@ -27,3 +27,5 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	cd debian/build && DESTDIR=${CURDIR}/debian/com.github.mubitosh.qrshare ninja install
+	mkdir -p debian/com.github.mubitosh.qrshare/usr/bin
+	cp bin/com.github.mubitosh.qrshare debian/com.github.mubitosh.qrshare/usr/bin/
