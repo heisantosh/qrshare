@@ -15,27 +15,21 @@ import (
 	"strings"
 )
 
-const (
-	NO_NETWORK      = "No Network"
-	NO_QR_GENERATED = "No QR Generated"
-	NO_ERROR        = ""
-)
-
 // getIPAddress returns the IP address assigned to default interface.
-func getIPAddress() (string, string) {
+func getIPAddress() (string, error) {
 	cmdStr := `ip route get "$(ip route show to 0/0 | grep -oP '(?<=via )\S+')" | grep -oP '(?<=src )\S+'`
 	out, err := exec.Command("bash", "-c", cmdStr).Output()
 	if err != nil {
-		return "", NO_NETWORK
+		return "", err
 	}
 	ipAddr := strings.Trim(string(out), " \n")
-	return ipAddr, NO_ERROR
+	return ipAddr, nil
 }
 
-func genQRCode(baseName, qrImage, port string) string {
-	ipAddr, errStr := getIPAddress()
-	if errStr != NO_ERROR {
-		return errStr
+func genQRCode(baseName, qrImage, port string) error {
+	ipAddr, err := getIPAddress()
+	if err != nil {
+		return err
 	}
 
 	u, _ := url.Parse(baseName)
@@ -47,15 +41,12 @@ func genQRCode(baseName, qrImage, port string) string {
 	defer file.Close()
 	png.Encode(file, qrCode)
 
-	return NO_ERROR
+	return nil
 }
 
 // alertViewNew returns a gtk Grid similar to AlertView widget from elementary granite library.
-func alertViewNew(errStr string) *gtk.Grid {
-	titleLabel, _ := gtk.LabelNew("Unable to create QR code")
-	if errStr == NO_NETWORK {
-		titleLabel.SetText("Network is not available")
-	}
+func alertViewNew() *gtk.Grid {
+	titleLabel, _ := gtk.LabelNew("Network is not available")
 	titleLabel.SetHExpand(true)
 	styleCtx, _ := titleLabel.GetStyleContext()
 	styleCtx.AddClass("h2")
@@ -64,31 +55,19 @@ func alertViewNew(errStr string) *gtk.Grid {
 	titleLabel.SetLineWrapMode(pango.WRAP_CHAR)
 	titleLabel.SetXAlign(0)
 
-	descriptionLabel, _ := gtk.LabelNew("Some dependant components might be missing.\n" +
-		"Reinstall the app and try again.")
-	if errStr == NO_NETWORK {
-		descriptionLabel.SetText("Connect to the same network as the device\n" +
+	descriptionLabel, _ := gtk.LabelNew("Connect to the same network as the device\n" +
 			"you will be using to scan the QR code.")
-	}
 	descriptionLabel.SetHExpand(true)
 	descriptionLabel.SetLineWrap(true)
 	descriptionLabel.SetUseMarkup(true)
 	descriptionLabel.SetXAlign(0)
 	descriptionLabel.SetVAlign(gtk.ALIGN_START)
-
-	actionButton, _ := gtk.LinkButtonNewWithLabel("https://appcenter.elementary.io/" + APP_ID,
-		"Go to AppCenter...")
-	if errStr == NO_NETWORK {
-		actionButton, _ = gtk.LinkButtonNewWithLabel("settings://settings/network",
+	actionButton, _ := gtk.LinkButtonNewWithLabel("settings://settings/network",
 			"Network Settings...")
-	}
 	actionButton.SetMarginTop(24)
 	actionButton.SetHAlign(gtk.ALIGN_END)
 
-	image, _ := gtk.ImageNewFromIconName("system-software-install", gtk.ICON_SIZE_DIALOG)
-	if errStr == NO_NETWORK {
-		image.SetFromIconName("network-error", gtk.ICON_SIZE_DIALOG)
-	}
+	image, _ := gtk.ImageNewFromIconName("network-error", gtk.ICON_SIZE_DIALOG)
 	image.SetMarginTop(6)
 	image.SetMarginBottom(6)
 	image.SetMarginEnd(6)
@@ -118,7 +97,7 @@ func qrWindowNew(app *App) *gtk.ApplicationWindow {
 	fileServer, _ := FileServerNew()
 	baseName := path.Base(*app.file)
 
-	errStr := genQRCode(baseName, app.image, strconv.Itoa(fileServer.port))
+	err := genQRCode(baseName, app.image, strconv.Itoa(fileServer.port))
 
 	window, _ := gtk.ApplicationWindowNew(app.gtkApp)
 	window.SetTitle("QR Share - " + baseName)
@@ -128,10 +107,9 @@ func qrWindowNew(app *App) *gtk.ApplicationWindow {
 	grid, _ := gtk.GridNew()
 	grid.SetOrientation(gtk.ORIENTATION_VERTICAL)
 
-	if errStr != NO_ERROR {
-		grid = alertViewNew(errStr)
+	if err != nil {
+		grid = alertViewNew()
 		window.Add(grid)
-
 		return window
 	}
 
@@ -162,7 +140,6 @@ func qrWindowNew(app *App) *gtk.ApplicationWindow {
 
 	grid.Add(image)
 	grid.Add(button)
-
 	window.Add(grid)
 
 	go fileServer.start(app, window)
