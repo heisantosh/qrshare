@@ -88,8 +88,10 @@ func openFilesApp() {
 func chooseFile(window *gtk.Window) string {
 	file := ""
 	chooser, _ := gtk.FileChooserDialogNewWith2Buttons("Select a file to share",
-		window, gtk.FILE_CHOOSER_ACTION_OPEN, "Select", gtk.RESPONSE_ACCEPT,
-		"Cancel", gtk.RESPONSE_CANCEL)
+		window,
+		gtk.FILE_CHOOSER_ACTION_OPEN,
+		"Cancel", gtk.RESPONSE_CANCEL,
+		"Select", gtk.RESPONSE_ACCEPT)
 	response := chooser.Run()
 	if response == int(gtk.RESPONSE_ACCEPT) {
 		file = chooser.GetFilename()
