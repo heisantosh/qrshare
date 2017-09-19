@@ -1,5 +1,7 @@
 # QR Share
 
+[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.mubitosh.qrshare)
+
 QR Share allows you to easily share files by scanning a QR code.
 
 <table cellspacing="0" cellpadding="0" style="border:none">
