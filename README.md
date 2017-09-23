@@ -84,8 +84,6 @@ The components are a file server, a contractor file to have an option in the rig
 
 ## Note
 
-This app was built using [elementary OS](https://elementary.io).
-
 ### About downloading files:
 
 The sharing will stop after 30 seconds in the scenario where a video/audio file is being streamed and not being downloaded. During the stream the client may buffer the contents and stay idle. The server will assume there is no activity if no download activity happens within 30 seconds (default value) and it will stop sharing.
