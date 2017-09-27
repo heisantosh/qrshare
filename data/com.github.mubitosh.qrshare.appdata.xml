@@ -5,7 +5,7 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>QR Share</name>
-  <summary>We share, QR share</summary>
+  <summary>Single click file sharing</summary>
   <description>
     <p>Share files via QR code in simple steps</p>
     <ol>
@@ -14,7 +14,7 @@
       <li>Scan QR code image</li>
       <li>Download file</li>
     </ol>
-    <p>To stop sharing click the Stop share button or it will stop sharing automagically after sometime.</p>
+    <p>To stop sharing click the Stop sharing button or it will stop sharing automagically after sometime.</p>
   </description>
   <url type="homepage">github.com/mubitosh/qrshare</url>
   <url type="bugtracker">github.com/mubitosh/qrshare/issues</url>
