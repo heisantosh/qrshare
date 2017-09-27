@@ -1,7 +1,5 @@
 # QR Share
 
-[![Get it on AppCenter](https://appcenter.elementary.io/badge.svg)](https://appcenter.elementary.io/com.github.mubitosh.qrshare)
-
 QR Share allows you to easily share files by scanning a QR code.
 
 <table cellspacing="0" cellpadding="0" style="border:none">
@@ -85,8 +83,6 @@ A barcode creation lib for golang [https://github.com/boombuler/barcode](https:/
 The components are a file server, a contractor file to have an option in the right click menu and a QR encoder. When the QR Share option is selected from the right click menu, the app starts a file server in the background. A link is generated in the form [http://default-interface-ip-address:random-port-number/shared-file-name](#how-it-works). The QR encoder simply encodes this link and window displays the generated QR code. This code can be scanned by any app which can recognise QR code. Afer clicking the link, the file can be downloaded. To stop the file server from running forever, a timer runs in the background. If no activity happens within a grace of 30 seconds (default value), the timer automatically stops the app. This also shuts down the file server.
 
 ## Note
-
-This app was built using [elementary OS](https://elementary.io).
 
 ### About downloading files:
 
