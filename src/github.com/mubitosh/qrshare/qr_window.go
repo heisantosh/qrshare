@@ -56,14 +56,14 @@ func alertViewNew() *gtk.Grid {
 	titleLabel.SetXAlign(0)
 
 	descriptionLabel, _ := gtk.LabelNew("Connect to the same network as the device\n" +
-			"you will be using to scan the QR code.")
+		"you will be using to scan the QR code.")
 	descriptionLabel.SetHExpand(true)
 	descriptionLabel.SetLineWrap(true)
 	descriptionLabel.SetUseMarkup(true)
 	descriptionLabel.SetXAlign(0)
 	descriptionLabel.SetVAlign(gtk.ALIGN_START)
 	actionButton, _ := gtk.LinkButtonNewWithLabel("settings://settings/network",
-			"Network Settings...")
+		"Network Settings...")
 	actionButton.SetMarginTop(24)
 	actionButton.SetHAlign(gtk.ALIGN_END)
 
@@ -93,13 +93,13 @@ func alertViewNew() *gtk.Grid {
 
 // qrWindowNew returns a window that displays the QR code image of the URL from
 // where the shared file can be downloaded.
-func qrWindowNew(app *App) *gtk.ApplicationWindow {
-	fileServer, _ := FileServerNew()
+func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
+	fileServer, _ := fileServerNew()
 	baseName := path.Base(*app.file)
 
 	err := genQRCode(baseName, app.image, strconv.Itoa(fileServer.port))
 
-	window, _ := gtk.ApplicationWindowNew(app.gtkApp)
+	window, _ := gtk.ApplicationWindowNew(app.Application)
 	window.SetTitle("QR Share - " + baseName)
 	window.SetSizeRequest(400, 400)
 	window.SetResizable(false)
@@ -132,7 +132,7 @@ func qrWindowNew(app *App) *gtk.ApplicationWindow {
 	button.SetMarginEnd(12)
 	button.Connect("clicked", func() {
 		if app.isContractor {
-			app.gtkApp.Quit()
+			app.Application.Quit()
 		} else {
 			window.Destroy()
 		}

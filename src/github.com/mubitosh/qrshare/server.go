@@ -43,16 +43,16 @@ func (ln tcpKeepAliveListener) Accept() (c net.Conn, err error) {
 	return tc, nil
 }
 
-// FileServer serves a file on a random port number. It shuts down if there
+// fileServer serves a file on a random port number. It shuts down if there
 // is no download from the server within a period of App.inactiviy seconds.
-type FileServer struct {
+type fileServer struct {
 	http.Server
 	port     int
 	listener net.Listener
 }
 
-func FileServerNew() (*FileServer, error) {
-	fs := &FileServer{}
+func fileServerNew() (*fileServer, error) {
+	fs := &fileServer{}
 	fs.Server.Addr = ":"
 	listener, err := net.Listen("tcp", fs.Server.Addr)
 	fs.listener = listener
@@ -63,7 +63,7 @@ func FileServerNew() (*FileServer, error) {
 	return fs, nil
 }
 
-func (fs *FileServer) start(app *App, window *gtk.ApplicationWindow) error {
+func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error {
 	serving, justServed := new(srvFlag), new(srvFlag)
 	serving.set(false)
 	justServed.set(false)
@@ -83,16 +83,16 @@ func (fs *FileServer) start(app *App, window *gtk.ApplicationWindow) error {
 	go func() {
 		for {
 			justServed.set(false)
-			time.Sleep(time.Duration(*app.inactive) * time.Second)
+			time.Sleep(time.Duration(*app.inActive) * time.Second)
 			if !serving.get() && !justServed.get() {
-				log.Println("Exceeded inactive time of", *app.inactive, "seconds")
+				log.Println("Exceeded inactive time of", *app.inActive, "seconds")
 				log.Println("Stopping file sharing")
 				if app.isContractor {
 					log.Println("App was started to display QR window only, exiting app")
 					os.Exit(0)
 				}
 				log.Println("App was started with main window, back to main window")
-				glib.IdleAdd(window.Destroy)
+				glib.IdleAdd(qrWindow.Destroy)
 				return
 			}
 		}

@@ -9,7 +9,7 @@ import (
 )
 
 // mainWindowNew returns Granite Welcome screen style window.
-func mainWindowNew(app *App) *gtk.ApplicationWindow {
+func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 	titleLabel, _ := gtk.LabelNew("Share a file with QR Share")
 	styleCtx, _ := titleLabel.GetStyleContext()
 	styleCtx.AddClass("h1")
@@ -56,19 +56,19 @@ func mainWindowNew(app *App) *gtk.ApplicationWindow {
 	grid.Add(subtitleLabel)
 	grid.Add(box)
 
-	window, _ := gtk.ApplicationWindowNew(app.gtkApp)
+	window, _ := gtk.ApplicationWindowNew(qrshare.Application)
 	window.SetTitle("QR Share")
 	window.SetSizeRequest(500, 500)
 	window.SetResizable(false)
 	window.Add(grid)
 
 	browseButton.Connect("clicked", func() {
-		*app.file = chooseFile(&window.Window)
+		*qrshare.file = chooseFile(&window.Window)
 		// No file was selected
-		if *app.file == "" {
+		if *qrshare.file == "" {
 			return
 		}
-		qrWindow := qrWindowNew(app)
+		qrWindow := qrWindowNew(qrshare)
 		qrWindow.ShowAll()
 	})
 
