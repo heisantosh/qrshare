@@ -9,12 +9,10 @@ import (
 	"os"
 )
 
-var qrshare *QrShare
-
-func init() {
+func main() {
 	log.SetFlags(log.Lshortfile | log.LstdFlags)
 
-	qrshare = new(QrShare)
+	qrshare := new(QrShare)
 
 	h := os.Getenv("XDG_DATA_HOME")
 	if h == "" {
@@ -27,9 +25,7 @@ func init() {
 	qrshare.file = flag.String("file", "", "Path of the file to be shared")
 	qrshare.inActive = flag.Int("inactive", 30,
 		"Sharing is stopped if no sharing activity happens within a period of inactive seconds")
-}
 
-func main() {
 	flag.Parse()
 	qrshare.Application, _ = gtk.ApplicationNew(appID, glib.APPLICATION_HANDLES_COMMAND_LINE)
 	qrshare.Connect("activate", qrshare.activate)
