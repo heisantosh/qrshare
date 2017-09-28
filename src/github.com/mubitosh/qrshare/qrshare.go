@@ -18,7 +18,7 @@ type QrShare struct {
 	inActive *int
 	// Location of QR image.
 	image string
-	// true if the QR image is displayed using contractor option.
+	// true if the QR image is displayed using contractor option from right click context menu.
 	isContractor bool
 	*gtk.Application
 }
