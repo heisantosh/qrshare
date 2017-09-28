@@ -7,6 +7,7 @@ import (
 	"flag"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 func main() {
@@ -16,11 +17,11 @@ func main() {
 
 	h := os.Getenv("XDG_DATA_HOME")
 	if h == "" {
-		h = os.Getenv("HOME") + "/.local/share"
+		h = filepath.Join(os.Getenv("HOME"), ".local/share")
 	}
-	dir := h + "/" + appID
+	dir := filepath.Join(h, appID)
 	os.MkdirAll(dir, 0775)
-	qrshare.image = dir + "/qrimage.png"
+	qrshare.image = filepath.Join(dir, "qrimage.png")
 
 	qrshare.file = flag.String("file", "", "Path of the file to be shared")
 	qrshare.inActive = flag.Int("inactive", 30,
