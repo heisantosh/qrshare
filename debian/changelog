@@ -1,3 +1,10 @@
+com.github.mubitosh.qrshare (0.7.7) xenial; urgency=medium
+
+  * Use dark theme
+  * Update application screenshots
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Wed, 27 Sep 2017 22:42:00 +0530
+
 com.github.mubitosh.qrshare (0.7.6) xenial; urgency=medium
 
   * Corrected order of Cancel, Select buttons in file chooser as per HIG guidelines
