@@ -63,7 +63,7 @@ func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 	window.Add(grid)
 
 	browseButton.Connect("clicked", func() {
-		*qrshare.file = chooseFile(&window.Window)
+		*qrshare.file = selectFile(&window.Window)
 		// No file was selected
 		if *qrshare.file == "" {
 			return
@@ -73,19 +73,19 @@ func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 	})
 
 	rightClickButton.Connect("clicked", func() {
-		openFilesApp()
+		openFiles()
 	})
 
 	return window
 }
 
-func openFilesApp() {
+func openFiles() {
 	youser, _ := user.Current()
 	cmd := exec.Command("pantheon-files", youser.HomeDir)
 	cmd.Start()
 }
 
-func chooseFile(window *gtk.Window) string {
+func selectFile(window *gtk.Window) string {
 	file := ""
 	chooser, _ := gtk.FileChooserDialogNewWith2Buttons("Select a file to share",
 		window,
