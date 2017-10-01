@@ -1,0 +1,71 @@
+# German translations for com.github.mubitosh.qrshare package.
+# Copyright (C) 2017 THE com.github.mubitosh.qrshare'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.mubitosh.qrshare package.
+# Santosh Heigrujam <santosh.hei@gmail.com>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.mubitosh.qrshare\n"
+"Report-Msgid-Bugs-To: EMAIL\n"
+"POT-Creation-Date: 2017-09-30 19:29+0530\n"
+"PO-Revision-Date: 2017-09-30 21:17+0530\n"
+"Last-Translator: Santosh Heigrujam <santosh.hei@gmail.com>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:93
+msgid "Cancel"
+msgstr "Stornieren"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:94
+msgid "Select"
+msgstr "Wählen"
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:49
+msgid "Network is not available"
+msgstr "Netzwerk ist nicht verfügbar"
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:128
+msgid "Stop Sharing"
+msgstr "Hör auf zu teilen"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:30
+msgid "Click here to select a file for sharing"
+msgstr "Klicken Sie hier, um eine Datei für die Freigabe auszuwählen"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:33
+msgid "Right Click in Files"
+msgstr "Klicken Sie mit der rechten Maustaste in Files"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:34
+msgid "Right click on any file in Files and select the QR Share option"
+msgstr "Klicken Sie mit der rechten Maustaste auf eine Datei in Files und wählen Sie die Option QR Share aus"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:90
+msgid "Select a file to share"
+msgstr "Wählen Sie eine zu freigebende Datei aus"
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:66
+msgid "Network Settings..."
+msgstr "Netzwerkeinstellungen ..."
+
+#: src/github.com/mubitosh/qrshare/main_window.go:13
+msgid "Share a file with QR Share"
+msgstr "Teilen Sie eine Datei mit QR Share"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:19
+msgid "Use any of the options below to share\nScan the QR code to download the file"
+msgstr "Verwenden Sie eine der folgenden Optionen, um zu teilen\nScannen Sie den QR-Code, um die Datei herunterzuladen"
+
+
+#: src/github.com/mubitosh/qrshare/main_window.go:29
+msgid "Select a file"
+msgstr "Wählen Sie eine Datei aus"
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:58
+msgid "Connect to the same network as the device\nyou will be using to scan the QR code."
+msgstr "Verbinden Sie das gleiche Netzwerk wie das Gerät\nSie werden den QR-Code scannen."
