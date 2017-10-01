@@ -1,3 +1,10 @@
+com.github.mubitosh.qrshare (0.7.8) xenial; urgency=medium
+
+  * Use dark them when started from right click in Files
+  * Enable app to be translated
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 1 Oct 2017 15:21:00 +0530
+
 com.github.mubitosh.qrshare (0.7.7) xenial; urgency=medium
 
   * Use dark theme
