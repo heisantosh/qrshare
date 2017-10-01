@@ -14,7 +14,7 @@ const (
 type QrShare struct {
 	// Name of file being shared.
 	file *string
-	// Sharing will stop if no sharing happends during inActive seconds.
+	// Sharing will stop if no sharing happens during inActive seconds.
 	inActive *int
 	// Location of QR image.
 	image string
