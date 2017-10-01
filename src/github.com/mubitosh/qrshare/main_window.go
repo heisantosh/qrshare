@@ -57,7 +57,7 @@ func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 
 	window, _ := gtk.ApplicationWindowNew(qrshare.Application)
 	window.SetTitle("QR Share")
-	window.SetSizeRequest(500, 500)
+	window.SetSizeRequest(700, 600)
 	window.SetResizable(false)
 	window.Add(grid)
 
