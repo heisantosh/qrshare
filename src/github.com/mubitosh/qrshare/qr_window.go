@@ -46,7 +46,7 @@ func genQRCode(baseName, qrImage, port string) error {
 
 // alertViewNew returns a gtk Grid similar to AlertView widget from elementary granite library.
 func alertViewNew() *gtk.Grid {
-	titleLabel, _ := gtk.LabelNew("Network is not available")
+	titleLabel, _ := gtk.LabelNew(T("Network is not available"))
 	titleLabel.SetHExpand(true)
 	styleCtx, _ := titleLabel.GetStyleContext()
 	styleCtx.AddClass("h2")
@@ -55,15 +55,14 @@ func alertViewNew() *gtk.Grid {
 	titleLabel.SetLineWrapMode(pango.WRAP_CHAR)
 	titleLabel.SetXAlign(0)
 
-	descriptionLabel, _ := gtk.LabelNew("Connect to the same network as the device\n" +
-		"you will be using to scan the QR code.")
+	descriptionLabel, _ := gtk.LabelNew(T("Connect to the same network as the device\nyou will be using to scan the QR code."))
 	descriptionLabel.SetHExpand(true)
 	descriptionLabel.SetLineWrap(true)
 	descriptionLabel.SetUseMarkup(true)
 	descriptionLabel.SetXAlign(0)
 	descriptionLabel.SetVAlign(gtk.ALIGN_START)
 	actionButton, _ := gtk.LinkButtonNewWithLabel("settings://settings/network",
-		"Network Settings...")
+		T("Network Settings..."))
 	actionButton.SetMarginTop(24)
 	actionButton.SetHAlign(gtk.ALIGN_END)
 
@@ -125,7 +124,7 @@ func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 	image.SetMarginTop(12)
 	image.SetMarginBottom(12)
 
-	button, _ := gtk.ButtonNewWithLabel("Stop Sharing")
+	button, _ := gtk.ButtonNewWithLabel(T("Stop Sharing"))
 	button.SetMarginBottom(12)
 	image.SetMarginTop(12)
 	button.SetMarginStart(12)

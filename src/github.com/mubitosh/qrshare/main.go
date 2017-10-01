@@ -28,8 +28,12 @@ func main() {
 		"Sharing is stopped if no sharing activity happens within a period of inactive seconds")
 
 	flag.Parse()
+
 	qrshare.Application, _ = gtk.ApplicationNew(appID, glib.APPLICATION_HANDLES_COMMAND_LINE)
 	qrshare.Connect("activate", qrshare.activate)
 	qrshare.Connect("command-line", qrshare.commandLine)
+
+	initI18n()
+
 	qrshare.Run(os.Args)
 }
