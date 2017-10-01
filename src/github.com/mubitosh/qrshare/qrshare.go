@@ -36,6 +36,8 @@ func (a *QrShare) commandLine(g *gtk.Application) {
 		return
 	}
 	a.isContractor = true
+	settings, _ := gtk.SettingsGetDefault()
+	settings.Set("gtk-application-prefer-dark-theme", true)
 	window := qrWindowNew(a)
 	window.ShowAll()
 }

@@ -10,14 +10,13 @@ import (
 
 // mainWindowNew returns Granite Welcome screen style window.
 func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
-	titleLabel, _ := gtk.LabelNew("Share a file with QR Share")
+	titleLabel, _ := gtk.LabelNew(T("Share a file with QR Share"))
 	styleCtx, _ := titleLabel.GetStyleContext()
 	styleCtx.AddClass("h1")
 	titleLabel.SetJustify(gtk.JUSTIFY_CENTER)
 	titleLabel.SetHExpand(true)
 
-	subtitleLabel, _ := gtk.LabelNew("Use any of the options below to share\n" +
-		"Scan the QR code to download the file")
+	subtitleLabel, _ := gtk.LabelNew(T("Use any of the options below to share\nScan the QR code to download the file"))
 	styleCtx, _ = subtitleLabel.GetStyleContext()
 	styleCtx.AddClass("h2")
 	styleCtx.AddClass("dim-label")
@@ -26,12 +25,12 @@ func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 	subtitleLabel.SetLineWrapMode(pango.WRAP_WORD)
 	subtitleLabel.SetHExpand(true)
 
-	browseButton := optionButtonNew("Select a file",
-		"Click here to select a file for sharing",
+	browseButton := optionButtonNew(T("Select a file"),
+		T("Click here to select a file for sharing"),
 		"text-x-preview")
 
-	rightClickButton := optionButtonNew("Right Click in Files",
-		"Right click on any file in Files and select the QR Share option",
+	rightClickButton := optionButtonNew(T("Right Click in Files"),
+		T("Right click on any file in Files and select the QR Share option"),
 		"system-file-manager")
 
 	box, _ := gtk.BoxNew(gtk.ORIENTATION_VERTICAL, 9)
@@ -87,11 +86,11 @@ func openFiles() {
 
 func selectFile(window *gtk.Window) string {
 	file := ""
-	chooser, _ := gtk.FileChooserDialogNewWith2Buttons("Select a file to share",
+	chooser, _ := gtk.FileChooserDialogNewWith2Buttons(T("Select a file to share"),
 		window,
 		gtk.FILE_CHOOSER_ACTION_OPEN,
-		"Cancel", gtk.RESPONSE_CANCEL,
-		"Select", gtk.RESPONSE_ACCEPT)
+		T("Cancel"), gtk.RESPONSE_CANCEL,
+		T("Select"), gtk.RESPONSE_ACCEPT)
 	response := chooser.Run()
 	if response == int(gtk.RESPONSE_ACCEPT) {
 		file = chooser.GetFilename()
