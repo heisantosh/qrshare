@@ -7,14 +7,12 @@
   <name>QR Share</name>
   <summary>Single click file sharing</summary>
   <description>
-    <p>Share files via QR code in simple steps</p>
+    <p>Share file as below:</p>
     <ol>
-      <li>Select file to share</li>
-      <li>Right click and select QR Share</li>
-      <li>Scan QR code image</li>
-      <li>Download file</li>
+      <li>Right click on file to share and select QR Share</li>
+      <li>Download the file by scanning the QR code image</li>
     </ol>
-    <p>To stop sharing click the Stop sharing button or it will stop sharing automagically after sometime.</p>
+    <p>To stop sharing click the Stop Sharing button or it will stop sharing automagically after sometime.</p>
   </description>
   <url type="homepage">github.com/mubitosh/qrshare</url>
   <url type="bugtracker">github.com/mubitosh/qrshare/issues</url>
