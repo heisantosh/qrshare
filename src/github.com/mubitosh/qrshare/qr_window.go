@@ -7,6 +7,7 @@ import (
 	"github.com/gotk3/gotk3/pango"
 
 	"image/png"
+	"log"
 	"net/url"
 	"os"
 	"os/exec"
@@ -26,10 +27,11 @@ func getIPAddress() (string, error) {
 	return ipAddr, nil
 }
 
-func genQRCode(baseName, qrImage, port string) error {
+// genQRCode generates a QR image of URL of the file to be served. It returns the URL.
+func genQRCode(baseName, qrImage, port string) (string, error) {
 	ipAddr, err := getIPAddress()
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	u, _ := url.Parse(baseName)
@@ -41,7 +43,7 @@ func genQRCode(baseName, qrImage, port string) error {
 	defer file.Close()
 	png.Encode(file, qrCode)
 
-	return nil
+	return "http://" + ipAddr + ":" + port, nil
 }
 
 // alertViewNew returns a gtk Grid similar to AlertView widget from elementary granite library.
@@ -96,7 +98,7 @@ func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 	fileServer, _ := fileServerNew()
 	baseName := path.Base(*app.file)
 
-	err := genQRCode(baseName, app.image, strconv.Itoa(fileServer.port))
+	url, err := genQRCode(baseName, app.image, strconv.Itoa(fileServer.port))
 
 	window, _ := gtk.ApplicationWindowNew(app.Application)
 	window.SetTitle("QR Share - " + baseName)
@@ -118,6 +120,14 @@ func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 		return true
 	})
 
+	urlLabel, _ := gtk.LabelNew(url)
+	urlLabel.SetMarginStart(12)
+	urlLabel.SetMarginEnd(12)
+	urlLabel.SetMarginTop(12)
+	urlLabel.SetMarginBottom(12)
+
+	log.Println("URL:", url)
+
 	image, _ := gtk.ImageNewFromFile(app.image)
 	image.SetMarginStart(12)
 	image.SetMarginEnd(12)
@@ -137,6 +147,7 @@ func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 		}
 	})
 
+	grid.Add(urlLabel)
 	grid.Add(image)
 	grid.Add(button)
 	window.Add(grid)
