@@ -120,10 +120,15 @@ func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 		return true
 	})
 
+	// Dummy label to get focus instead of urlLabel when opened
+	// for the first time
+	focusLabel, _ := gtk.LabelNew("")
+	focusLabel.SetSelectable(true)
+
 	urlLabel, _ := gtk.LabelNew(url)
 	urlLabel.SetMarginStart(12)
 	urlLabel.SetMarginEnd(12)
-	urlLabel.SetMarginTop(12)
+	// urlLabel.SetMarginTop(12)
 	urlLabel.SetMarginBottom(12)
 	urlLabel.SetSelectable(true)
 	styleCtx, _ := urlLabel.GetStyleContext()
@@ -150,6 +155,7 @@ func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 		}
 	})
 
+	grid.Add(focusLabel)
 	grid.Add(urlLabel)
 	grid.Add(image)
 	grid.Add(button)
