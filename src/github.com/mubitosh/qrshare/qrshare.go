@@ -2,8 +2,6 @@ package main
 
 import (
 	"github.com/gotk3/gotk3/gtk"
-
-	"os"
 )
 
 const (
@@ -12,8 +10,8 @@ const (
 
 // QrShare represents the state of the QR Share application.
 type QrShare struct {
-	// Name of file being shared.
-	file *string
+	// Absolute paths of files being shared.
+	files []string
 	// Sharing will stop if no sharing happens during inActive seconds.
 	inActive *int
 	// Location of QR image.
@@ -31,7 +29,7 @@ func (a *QrShare) activate(g *gtk.Application) {
 }
 
 func (a *QrShare) commandLine(g *gtk.Application) {
-	if len(os.Args) != 3 {
+	if len(a.files) == 0 {
 		a.activate(g)
 		return
 	}

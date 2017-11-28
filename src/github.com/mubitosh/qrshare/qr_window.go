@@ -8,10 +8,8 @@ import (
 
 	"image/png"
 	"log"
-	"net/url"
 	"os"
 	"os/exec"
-	"path"
 	"strconv"
 	"strings"
 )
@@ -28,22 +26,20 @@ func getIPAddress() (string, error) {
 }
 
 // genQRCode generates a QR image of URL of the file to be served. It returns the URL.
-func genQRCode(baseName, qrImage, port string) (string, error) {
+func genQRCode(qrImage, port string) (string, error) {
 	ipAddr, err := getIPAddress()
 	if err != nil {
 		return "", err
 	}
 
-	u, _ := url.Parse(baseName)
-	url := "http://" + ipAddr + ":" + port + "/" + u.EscapedPath()
-
+	url := "http://" + ipAddr + ":" + port
 	qrCode, _ := qr.Encode(url, qr.M, qr.Auto)
 	qrCode, _ = barcode.Scale(qrCode, 300, 300)
 	file, _ := os.Create(qrImage)
 	defer file.Close()
 	png.Encode(file, qrCode)
 
-	return "http://" + ipAddr + ":" + port, nil
+	return url, nil
 }
 
 // alertViewNew returns a gtk Grid similar to AlertView widget from elementary granite library.
@@ -96,12 +92,11 @@ func alertViewNew() *gtk.Grid {
 // where the shared file can be downloaded.
 func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 	fileServer, _ := fileServerNew()
-	baseName := path.Base(*app.file)
 
-	url, err := genQRCode(baseName, app.image, strconv.Itoa(fileServer.port))
+	url, err := genQRCode(app.image, strconv.Itoa(fileServer.port))
 
 	window, _ := gtk.ApplicationWindowNew(app.Application)
-	window.SetTitle("QR Share - " + baseName)
+	window.SetTitle("QR Share")
 	window.SetSizeRequest(400, 400)
 	window.SetResizable(false)
 

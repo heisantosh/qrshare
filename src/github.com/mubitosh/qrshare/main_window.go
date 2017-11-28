@@ -1,11 +1,15 @@
 package main
 
 import (
+	"C"
+
 	"github.com/gotk3/gotk3/gtk"
 	"github.com/gotk3/gotk3/pango"
 
 	"os/exec"
 	"os/user"
+	"unsafe"
+	"log"
 )
 
 // mainWindowNew returns Granite Welcome screen style window.
@@ -62,9 +66,9 @@ func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 	window.Add(grid)
 
 	browseButton.Connect("clicked", func() {
-		*qrshare.file = selectFile(&window.Window)
+		qrshare.files = selectFiles(&window.Window)
 		// No file was selected
-		if *qrshare.file == "" {
+		if len(qrshare.files) == 0 {
 			return
 		}
 		qrWindow := qrWindowNew(qrshare)
@@ -84,18 +88,36 @@ func openFiles() {
 	cmd.Start()
 }
 
-func selectFile(window *gtk.Window) string {
-	file := ""
+// selectFiles displays a file chooser dialog to select multiple files.
+// It returns a list of names of the selected files.
+// Folders cannot be selected.
+func selectFiles(window *gtk.Window) ([]string) {
+	files := []string{}
 	chooser, _ := gtk.FileChooserDialogNewWith2Buttons(T("Select a file to share"),
 		window,
-		gtk.FILE_CHOOSER_ACTION_OPEN,
+		gtk.FILE_CHOOSER_ACTION_OPEN & gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+		// I hope something like this was allowed to select both files and folders.
+		// gtk.FILE_CHOOSER_ACTION_OPEN & gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
 		T("Cancel"), gtk.RESPONSE_CANCEL,
 		T("Select"), gtk.RESPONSE_ACCEPT)
+	chooser.SetSelectMultiple(true)
 	response := chooser.Run()
 	if response == int(gtk.RESPONSE_ACCEPT) {
-		file = chooser.GetFilename()
+		list, err := chooser.GetFilenames()
+		if err != nil {
+			log.Println("Error:", err)
+		} else {
+			list.Foreach(func(ptr unsafe.Pointer){
+				files = append(files, C.GoString((*C.char)(ptr)))
+			})
+		}
 	}
 	chooser.Destroy()
 
-	return file
+	log.Println("Selected", len(files), "files:")
+	for _, s := range files {
+		log.Println(s)
+	}
+
+	return files
 }
