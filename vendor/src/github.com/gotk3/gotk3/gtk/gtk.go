@@ -3775,6 +3775,20 @@ func (v *FileChooser) GetFilename() string {
 	return s
 }
 
+// GetFilenames is a wrapper around gtk_file_chooser_get_filenames().
+func (v *FileChooser) GetFilenames() (*glib.SList, error) {
+	c := C.gtk_file_chooser_get_filenames(v.native())
+	if c == nil {
+		return nil, nilPtrErr
+	}
+	return glib.WrapSList(uintptr(unsafe.Pointer(c))), nil
+}
+
+// SetSelectMultiple is a wrapper around gtk_file_chooser_set_select_multiple().
+func (v *FileChooser) SetSelectMultiple(multiple bool) {
+	C.gtk_file_chooser_set_select_multiple(v.native(), gbool(multiple))
+}
+
 // SetCurrentName is a wrapper around gtk_file_chooser_set_current_name().
 func (v *FileChooser) SetCurrentName(name string) {
 	cstr := C.CString(name)
