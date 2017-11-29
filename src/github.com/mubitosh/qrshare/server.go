@@ -259,7 +259,7 @@ var listingHTML = `<html>
         }
         
         .file {
-            max-width: 90px;
+            width: 80px;
             word-wrap: break-word;
             display: inline-block;
             margin: 10px;
@@ -279,11 +279,9 @@ var listingHTML = `<html>
         .file-name {
             text-align: center;
             color: black;
-        }
-
-        * {
         	font-family: "Arial";
         	font-size: small;
+        	color: rgb(80, 80, 80)
         }
     </style>
 </head>
