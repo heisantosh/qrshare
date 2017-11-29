@@ -1,4 +1,7 @@
 [Contractor Entry]
 Name=QR Share
+Icon=com.github.mubitosh.qrshare
 Description=Quickly share files by scanning QR code
+MimeType=!inode/blockdevice;inode/chardevice;inode/fifo;inode/socket;
 Exec=com.github.mubitosh.qrshare -inactive=60 %F
+Gettext-Domain=com.github.mubitosh.qrshare
