@@ -29,11 +29,8 @@ func main() {
 	flag.Parse()
 	qrshare.files = flag.Args()
 
-	// Feature: Currently the app accepts absolute pathnames only.
-	// This is because the app is supposed to be used with contractor.
-	// Make it work with relative pathnames also.
-
-	qrshare.Application, _ = gtk.ApplicationNew(appID, glib.APPLICATION_HANDLES_COMMAND_LINE)
+	qrshare.Application, _ = gtk.ApplicationNew(appID,
+		glib.APPLICATION_HANDLES_COMMAND_LINE|glib.APPLICATION_NON_UNIQUE)
 	qrshare.Connect("activate", qrshare.activate)
 	qrshare.Connect("command-line", qrshare.commandLine)
 
