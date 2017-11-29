@@ -280,6 +280,11 @@ var listingHTML = `<html>
             text-align: center;
             color: black;
         }
+
+        * {
+        	font-family: "Arial";
+        	font-size: small;
+        }
     </style>
 </head>
 
