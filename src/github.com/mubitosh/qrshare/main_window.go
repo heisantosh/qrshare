@@ -6,10 +6,10 @@ import (
 	"github.com/gotk3/gotk3/gtk"
 	"github.com/gotk3/gotk3/pango"
 
+	"log"
 	"os/exec"
 	"os/user"
 	"unsafe"
-	"log"
 )
 
 // mainWindowNew returns Granite Welcome screen style window.
@@ -91,11 +91,11 @@ func openFiles() {
 // selectFiles displays a file chooser dialog to select multiple files.
 // It returns a list of names of the selected files.
 // Folders cannot be selected.
-func selectFiles(window *gtk.Window) ([]string) {
+func selectFiles(window *gtk.Window) []string {
 	files := []string{}
 	chooser, _ := gtk.FileChooserDialogNewWith2Buttons(T("Select a file to share"),
 		window,
-		gtk.FILE_CHOOSER_ACTION_OPEN & gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
+		gtk.FILE_CHOOSER_ACTION_OPEN&gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
 		// I hope something like this was allowed to select both files and folders.
 		// gtk.FILE_CHOOSER_ACTION_OPEN & gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
 		T("Cancel"), gtk.RESPONSE_CANCEL,
@@ -107,7 +107,7 @@ func selectFiles(window *gtk.Window) ([]string) {
 		if err != nil {
 			log.Println("Error:", err)
 		} else {
-			list.Foreach(func(ptr unsafe.Pointer){
+			list.Foreach(func(ptr unsafe.Pointer) {
 				files = append(files, C.GoString((*C.char)(ptr)))
 			})
 		}
