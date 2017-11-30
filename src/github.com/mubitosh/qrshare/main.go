@@ -23,7 +23,7 @@ func main() {
 	os.MkdirAll(dir, 0775)
 	qrshare.image = filepath.Join(dir, "qrimage.png")
 
-	qrshare.inActive = flag.Int("inactive", 30,
+	qrshare.inActive = flag.Int("inactive", 60,
 		"Sharing is stopped if no sharing activity happens within a period of inactive seconds")
 
 	flag.Parse()
@@ -35,13 +35,6 @@ func main() {
 	qrshare.Connect("command-line", qrshare.commandLine)
 
 	initI18n()
-
-	if len(qrshare.files) > 0 {
-		log.Println("Provided", len(qrshare.files), "files through command line or contractor:")
-		for _, s := range qrshare.files {
-			log.Println(s)
-		}
-	}
 
 	qrshare.Run(os.Args)
 }
