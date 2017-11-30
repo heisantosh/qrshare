@@ -98,9 +98,10 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 	// Get pulse from open webpages.
 	mux.HandleFunc("/iamalive", func(w http.ResponseWriter, r *http.Request) {
 		serving.set(true)
-		log.Println("imalive")
+		log.Println(r.UserAgent(), ": I am alive")
 	})
 
+	// Serve shared files under path /shared/
 	mux.Handle(sharedPath, http.StripPrefix(sharedPath,
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if path.Clean(r.URL.Path) == "/" {
@@ -116,6 +117,9 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 	fs.Server.Handler = mux
 
 	// Stop sharing when no activity is there.
+	// TODO: Decide timeout mechanism when a single file is being served.
+	// Currently since, there'll be no iamalive calls from the page,
+	// below go routine will stop the app as it'll see it to be inactive.
 	go func() {
 		for {
 			serving.set(false)
@@ -208,6 +212,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	}
 
 	// TODO: Sort the filenames
+	// I think the slice return from os.Readdir is sorted already.
 
 	for _, fStat := range fStats {
 		if fStat.Name()[0] == '.' {
@@ -215,7 +220,9 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 		}
 
 		// If path is root, filter files not in app.files.
-		if _, ok := rootSelectedFiles[fStat.Name()]; !ok && r.URL.Path == "/" &&
+		if _, ok := rootSelectedFiles[fStat.Name()]; !ok && 
+			// http.StripPrefix removes / also. Need to check for that.
+			(r.URL.Path == "/" || r.URL.Path == "") &&
 			// It's okay if there is only one directory is to be served.
 			len(rootSelectedFiles) != 1 {
 			continue
@@ -318,6 +325,15 @@ var listingHTML = `<html>
         {{end}}
 
     </div>
+    <script>
+    	// Tell I am alive every 10 seconds.
+    	setInterval(function () {
+    		console.log("telling i am alive");
+    		req = new XMLHttpRequest();
+    		req.open("GET", "/iamalive");
+    		req.send(null);
+		}, 10*1000);
+    </script>
 </body>
 
 </html>`
