@@ -29,8 +29,8 @@ func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 	subtitleLabel.SetLineWrapMode(pango.WRAP_WORD)
 	subtitleLabel.SetHExpand(true)
 
-	browseButton := optionButtonNew(T("Select a file"),
-		T("Click here to select a file for sharing"),
+	browseButton := optionButtonNew(T("Select files or folders"),
+		T("Click here to select files or folders for sharing"),
 		"text-x-preview")
 
 	rightClickButton := optionButtonNew(T("Right Click in Files"),
