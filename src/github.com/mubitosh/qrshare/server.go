@@ -63,6 +63,8 @@ type fileServer struct {
 // Map of selected files provided as command line args to the application.
 var rootSelectedFiles map[string]bool
 
+var sharedPath = "/shared/"
+
 func fileServerNew() (*fileServer, error) {
 	fs := &fileServer{}
 	fs.Server.Addr = ":"
@@ -81,9 +83,7 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 		rootSelectedFiles[path.Base(s)] = true
 	}
 
-	serving, justServed := new(srvFlag), new(srvFlag)
-	serving.set(false)
-	justServed.set(false)
+	serving := new(srvFlag)
 
 	_, err := os.Stat(app.files[0])
 	if err != nil {
@@ -94,30 +94,33 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 	ap := getAbsPath(app.files)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
+	// Get pulse from open webpages.
+	mux.HandleFunc("/iamalive", func(w http.ResponseWriter, r *http.Request) {
 		serving.set(true)
-
-		if path.Clean(r.URL.Path) == "/" {
-			// Because there might be only one file to be served at the root.
-			// And adding a / at the end of a filename will make it
-			// a directory name.
-			serve(w, r, ap)
-		} else {
-			serve(w, r, path.Join(ap, path.Clean(r.URL.Path)))
-		}
-
-		serving.set(false)
-		justServed.set(true)
+		log.Println("imalive")
 	})
+
+	mux.Handle(sharedPath, http.StripPrefix(sharedPath,
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if path.Clean(r.URL.Path) == "/" {
+				// Because there might be only one file to be served at the root.
+				// Joining a URL path / at the end of a filename will make the
+				// filepath a directory name.
+				serve(w, r, ap)
+			} else {
+				serve(w, r, path.Join(ap, path.Clean(r.URL.Path)))
+			}
+		})))
 
 	fs.Server.Handler = mux
 
 	// Stop sharing when no activity is there.
 	go func() {
 		for {
-			justServed.set(false)
+			serving.set(false)
 			time.Sleep(time.Duration(*app.inActive) * time.Second)
-			if !serving.get() && !justServed.get() {
+			if !serving.get() {
 				log.Println("Exceeded inactive time of", *app.inActive, "seconds")
 				log.Println("Stopping file sharing")
 				if app.isContractor {
@@ -199,6 +202,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 		ChildDirs:  []fileInfo{},
 	}
 
+	// If not at root of sharing, url path should equal to relative file path.
 	if r.URL.Path != "/" {
 		fis.Name = r.URL.Path
 	}
@@ -293,7 +297,7 @@ var listingHTML = `<html>
 
         {{range .ChildDirs}}
         <div class="file">
-            <a class="file-url" href="{{$name}}/{{.Name}}">
+            <a class="file-url" href="/shared/{{$name}}/{{.Name}}">
                 <div class="icon">
                     <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
                 </div>
@@ -304,7 +308,7 @@ var listingHTML = `<html>
 
         {{range .ChildFiles}}
         <div class="file">
-            <a class="file-url" href="{{$name}}/{{.Name}}">
+            <a class="file-url" href="/shared/{{$name}}/{{.Name}}">
                 <div class="icon">
                     <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
                 </div>
