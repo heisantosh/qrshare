@@ -32,8 +32,8 @@ func genQRCode(qrImage, port string) (string, error) {
 		return "", err
 	}
 
-	url := "http://" + ipAddr + ":" + port
-	qrCode, _ := qr.Encode(url+sharedPath, qr.M, qr.Auto)
+	url := "http://" + ipAddr + ":" + port + sharedPath
+	qrCode, _ := qr.Encode(url, qr.M, qr.Auto)
 	qrCode, _ = barcode.Scale(qrCode, 300, 300)
 	file, _ := os.Create(qrImage)
 	defer file.Close()
