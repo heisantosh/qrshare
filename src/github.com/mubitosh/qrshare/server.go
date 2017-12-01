@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 
 	"html/template"
@@ -10,7 +9,6 @@ import (
 	"net/http"
 	"os"
 	"path"
-	"sync"
 	"time"
 )
 
@@ -19,23 +17,6 @@ type fileInfo struct {
 	Icon       string
 	ChildDirs  []fileInfo
 	ChildFiles []fileInfo
-}
-
-type srvFlag struct {
-	value bool
-	mutex sync.Mutex
-}
-
-func (f *srvFlag) set(v bool) {
-	f.mutex.Lock()
-	f.value = v
-	f.mutex.Unlock()
-}
-
-func (f *srvFlag) get() bool {
-	f.mutex.Lock()
-	defer f.mutex.Unlock()
-	return f.value
 }
 
 type tcpKeepAliveListener struct {
@@ -63,7 +44,7 @@ type fileServer struct {
 // Map of selected files provided as command line args to the application.
 var rootSelectedFiles map[string]bool
 
-var sharedPath = "/shared/"
+var sharedPath = "/"
 
 func fileServerNew() (*fileServer, error) {
 	fs := &fileServer{}
@@ -83,8 +64,6 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 		rootSelectedFiles[path.Base(s)] = true
 	}
 
-	serving := new(srvFlag)
-
 	_, err := os.Stat(app.files[0])
 	if err != nil {
 		log.Println("Error starting server:", err)
@@ -95,13 +74,7 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 
 	mux := http.NewServeMux()
 
-	// Get pulse from open webpages.
-	mux.HandleFunc("/iamalive", func(w http.ResponseWriter, r *http.Request) {
-		serving.set(true)
-		log.Println(r.UserAgent(), ": I am alive")
-	})
-
-	// Serve shared files under path /shared/
+	// Serve shared files under path sharedPath
 	mux.Handle(sharedPath, http.StripPrefix(sharedPath,
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if path.Clean(r.URL.Path) == "/" {
@@ -115,28 +88,6 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 		})))
 
 	fs.Server.Handler = mux
-
-	// Stop sharing when no activity is there.
-	// TODO: Decide timeout mechanism when a single file is being served.
-	// Currently since, there'll be no iamalive calls from the page,
-	// below go routine will stop the app as it'll see it to be inactive.
-	go func() {
-		for {
-			serving.set(false)
-			time.Sleep(time.Duration(*app.inActive) * time.Second)
-			if !serving.get() {
-				log.Println("Exceeded inactive time of", *app.inActive, "seconds")
-				log.Println("Stopping file sharing")
-				if app.isContractor {
-					log.Println("App was started to display QR window only, exiting app")
-					os.Exit(0)
-				}
-				log.Println("App was started with main window, back to main window")
-				glib.IdleAdd(qrWindow.Destroy)
-				return
-			}
-		}
-	}()
 
 	log.Println("Starting file sharing")
 	return fs.Serve(tcpKeepAliveListener{fs.listener.(*net.TCPListener)})
@@ -220,7 +171,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 		}
 
 		// If path is root, filter files not in app.files.
-		if _, ok := rootSelectedFiles[fStat.Name()]; !ok && 
+		if _, ok := rootSelectedFiles[fStat.Name()]; !ok &&
 			// http.StripPrefix removes / also. Need to check for that.
 			(r.URL.Path == "/" || r.URL.Path == "") &&
 			// It's okay if there is only one directory is to be served.
@@ -304,7 +255,7 @@ var listingHTML = `<html>
 
         {{range .ChildDirs}}
         <div class="file">
-            <a class="file-url" href="/shared/{{$name}}/{{.Name}}">
+            <a class="file-url" href="/{{$name}}/{{.Name}}">
                 <div class="icon">
                     <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
                 </div>
@@ -315,7 +266,7 @@ var listingHTML = `<html>
 
         {{range .ChildFiles}}
         <div class="file">
-            <a class="file-url" href="/shared/{{$name}}/{{.Name}}">
+            <a class="file-url" href="/{{$name}}/{{.Name}}">
                 <div class="icon">
                     <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
                 </div>
@@ -325,15 +276,6 @@ var listingHTML = `<html>
         {{end}}
 
     </div>
-    <script>
-    	// Tell I am alive every 10 seconds.
-    	setInterval(function () {
-    		console.log("telling i am alive");
-    		req = new XMLHttpRequest();
-    		req.open("GET", "/iamalive");
-    		req.send(null);
-		}, 10*1000);
-    </script>
 </body>
 
 </html>`

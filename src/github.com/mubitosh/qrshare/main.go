@@ -4,7 +4,6 @@ import (
 	"github.com/gotk3/gotk3/glib"
 	"github.com/gotk3/gotk3/gtk"
 
-	"flag"
 	"log"
 	"os"
 	"path/filepath"
@@ -23,11 +22,7 @@ func main() {
 	os.MkdirAll(dir, 0775)
 	qrshare.image = filepath.Join(dir, "qrimage.png")
 
-	qrshare.inActive = flag.Int("inactive", 60,
-		"Sharing is stopped if no sharing activity happens within a period of inactive seconds")
-
-	flag.Parse()
-	qrshare.files = flag.Args()
+	qrshare.files = os.Args[1:]
 
 	qrshare.Application, _ = gtk.ApplicationNew(appID,
 		glib.APPLICATION_HANDLES_COMMAND_LINE|glib.APPLICATION_NON_UNIQUE)
