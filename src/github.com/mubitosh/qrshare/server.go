@@ -255,7 +255,7 @@ var listingHTML = `<html>
 
         {{range .ChildDirs}}
         <div class="file">
-            <a class="file-url" href="/{{$name}}/{{.Name}}">
+            <a class="file-url" href="{{$name}}/{{.Name}}">
                 <div class="icon">
                     <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
                 </div>
@@ -266,7 +266,7 @@ var listingHTML = `<html>
 
         {{range .ChildFiles}}
         <div class="file">
-            <a class="file-url" href="/{{$name}}/{{.Name}}">
+            <a class="file-url" href="{{$name}}/{{.Name}}">
                 <div class="icon">
                     <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
                 </div>
