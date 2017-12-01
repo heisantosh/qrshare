@@ -14,13 +14,13 @@ import (
 
 // mainWindowNew returns Granite Welcome screen style window.
 func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
-	titleLabel, _ := gtk.LabelNew(T("Share a file with QR Share"))
+	titleLabel, _ := gtk.LabelNew(T("Share files or folders"))
 	styleCtx, _ := titleLabel.GetStyleContext()
 	styleCtx.AddClass("h1")
 	titleLabel.SetJustify(gtk.JUSTIFY_CENTER)
 	titleLabel.SetHExpand(true)
 
-	subtitleLabel, _ := gtk.LabelNew(T("Use any of the options below to share\nScan the QR code to download the file"))
+	subtitleLabel, _ := gtk.LabelNew(T("Use any of the options below to share\nScan the QR code to download"))
 	styleCtx, _ = subtitleLabel.GetStyleContext()
 	styleCtx.AddClass("h2")
 	styleCtx.AddClass("dim-label")
@@ -33,8 +33,8 @@ func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
 		T("Click here to select files or folders for sharing"),
 		"text-x-preview")
 
-	rightClickButton := optionButtonNew(T("Right Click in Files"),
-		T("Right click on any file in Files and select the QR Share option"),
+	rightClickButton := optionButtonNew(T("Right click in Files application"),
+		T("Select files and folders and select the QR Share option"),
 		"system-file-manager")
 
 	box, _ := gtk.BoxNew(gtk.ORIENTATION_VERTICAL, 9)

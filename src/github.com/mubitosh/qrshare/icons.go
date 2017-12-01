@@ -1278,3 +1278,8 @@ YXBlLXJlbmRlcmluZzphdXRvO3RleHQtcmVuZGVyaW5nOmF1dG87ZW5hYmxlLWJhY2tncm91bmQ6
 YWNjdW11bGF0ZSIgLz4KPC9zdmc+Cg==`
 
 var iconGenericFile string = iconText
+
+// getIcon returns a icon type based on the MIME type of the file.
+func getIcon(fileName string) string {
+	return ""
+}

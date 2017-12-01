@@ -33,6 +33,9 @@ func genQRCode(qrImage, port string) (string, error) {
 	}
 
 	url := "http://" + ipAddr + ":" + port + sharedPath
+
+	log.Println("URL to share:", url)
+
 	qrCode, _ := qr.Encode(url, qr.M, qr.Auto)
 	qrCode, _ = barcode.Scale(qrCode, 300, 300)
 	file, _ := os.Create(qrImage)
