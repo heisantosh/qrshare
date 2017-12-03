@@ -67,4 +67,3 @@ msgstr  ""
 #: src/github.com/mubitosh/qrshare/qr_window.go:59
 msgid   "Connect to the same network as the device\nyou will be using to scan the QR code."
 msgstr  ""
-

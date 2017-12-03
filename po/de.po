@@ -53,7 +53,7 @@ msgstr "Wählen Sie Dateien oder Ordner aus"
 
 #: src/github.com/mubitosh/qrshare/main_window.go:37
 msgid "Select files and folders and select the QR Share option"
-msgstr "Wählen Sie Dateien und Ordner und wählen Sie die Option QR-Freigabe"
+msgstr "Wählen Sie Dateien und Ordner und wählen Sie die Option QR Share"
 
 #: src/github.com/mubitosh/qrshare/main_window.go:96
 msgid "Select files or folders to share"
