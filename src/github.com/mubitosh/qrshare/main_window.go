@@ -111,7 +111,7 @@ func selectFiles(window *gtk.Window) []string {
 				files = append(files, C.GoString((*C.char)(ptr)))
 			})
 		}
-		list.FreeFull()
+		list.Free()
 	}
 	chooser.Destroy()
 
