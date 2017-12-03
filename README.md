@@ -1,6 +1,6 @@
 # QR Share
 
-An elementary OS app for sharing files. QR Share allows you to easily share files by scanning a QR code.
+An [elementary OS](https://elementary.io/) app for sharing files. QR Share allows you to easily share files by scanning a QR code.
 
 <table cellspacing="0" cellpadding="0" style="border:none">
 	<tr>
