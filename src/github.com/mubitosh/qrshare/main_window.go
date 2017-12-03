@@ -93,7 +93,7 @@ func openFiles() {
 // Folders cannot be selected.
 func selectFiles(window *gtk.Window) []string {
 	files := []string{}
-	chooser, _ := gtk.FileChooserDialogNewWith2Buttons(T("Select a file to share"),
+	chooser, _ := gtk.FileChooserDialogNewWith2Buttons(T("Select files or folders to share"),
 		window,
 		gtk.FILE_CHOOSER_ACTION_OPEN&gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER,
 		// I hope something like this was allowed to select both files and folders.
