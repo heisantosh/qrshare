@@ -83,6 +83,8 @@ Go bindings for GTK3 gotk3 [https://github.com/gotk3/gotk3](https://github.com/g
 
 A barcode creation lib for golang [https://github.com/boombuler/barcode](https://github.com/boombuler/barcode)
 
+Golang (Go) bindings for GNU's gettext [https://github.com/gosexy/gettext](https://github.com/gosexy/gettext)
+
 ## How it works
 
 The components are a file server, a contractor file to have an option in the right click menu and a QR encoder. When the QR Share option is selected from the right click menu, the app starts a file server in the background. A link is generated in the form [http://default-interface-ip-address:random-port-number/](#how-it-works). The QR encoder simply encodes this link and window displays the generated QR code. This code can be scanned by any app which can recognise QR code. Afer clicking the link, the file can be downloaded. Sharing is stopped when the Stop Sharing button is clicked on the QR window.
