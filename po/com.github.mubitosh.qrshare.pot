@@ -7,7 +7,7 @@
 msgid   ""
 msgstr  "Project-Id-Version: com.github.mubitosh.qrshare\n"
         "Report-Msgid-Bugs-To: EMAIL\n"
-        "POT-Creation-Date: 2017-09-30 19:29+0530\n"
+        "POT-Creation-Date: 2017-12-03 15:31+0530\n"
         "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
         "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
         "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,55 +16,57 @@ msgstr  "Project-Id-Version: com.github.mubitosh.qrshare\n"
         "Content-Type: text/plain; charset=CHARSET\n"
         "Content-Transfer-Encoding: 8bit\n"
 
-#: src/github.com/mubitosh/qrshare/main_window.go:93
-msgid   "Cancel"
-msgstr  ""
-
-#: src/github.com/mubitosh/qrshare/main_window.go:94
-msgid   "Select"
-msgstr  ""
-
-#: src/github.com/mubitosh/qrshare/qr_window.go:49
-msgid   "Network is not available"
-msgstr  ""
-
-#: src/github.com/mubitosh/qrshare/qr_window.go:128
-msgid   "Stop Sharing"
-msgstr  ""
-
-#: src/github.com/mubitosh/qrshare/main_window.go:30
-msgid   "Click here to select a file for sharing"
+#: src/github.com/mubitosh/qrshare/main_window.go:23
+msgid   "Use any of the options below to share\n"
+        "Scan the QR code to download"
 msgstr  ""
 
 #: src/github.com/mubitosh/qrshare/main_window.go:33
-msgid   "Right Click in Files"
+msgid   "Click here to select files or folders for sharing"
 msgstr  ""
 
-#: src/github.com/mubitosh/qrshare/main_window.go:34
-msgid   "Right click on any file in Files and select the QR Share option"
+#: src/github.com/mubitosh/qrshare/main_window.go:36
+msgid   "Right click in Files application"
 msgstr  ""
 
-#: src/github.com/mubitosh/qrshare/main_window.go:90
-msgid   "Select a file to share"
+#: src/github.com/mubitosh/qrshare/main_window.go:37
+msgid   "Select files and folders and select the QR Share option"
+msgstr  ""
+
+#: src/github.com/mubitosh/qrshare/main_window.go:101
+msgid   "Cancel"
+msgstr  ""
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:59
+msgid   "Connect to the same network as the device\n"
+        "you will be using to scan the QR code."
 msgstr  ""
 
 #: src/github.com/mubitosh/qrshare/qr_window.go:66
 msgid   "Network Settings..."
 msgstr  ""
 
-#: src/github.com/mubitosh/qrshare/main_window.go:13
-msgid   "Share a file with QR Share"
+#: src/github.com/mubitosh/qrshare/qr_window.go:141
+msgid   "Stop Sharing"
 msgstr  ""
 
-#: src/github.com/mubitosh/qrshare/main_window.go:19
-msgid   "Use any of the options below to share\nScan the QR code to download the file"
+#: src/github.com/mubitosh/qrshare/main_window.go:17
+msgid   "Share files and folders"
 msgstr  ""
 
-#: src/github.com/mubitosh/qrshare/main_window.go:29
-msgid   "Select a file"
+#: src/github.com/mubitosh/qrshare/main_window.go:32
+msgid   "Select files or folders"
 msgstr  ""
 
-#: src/github.com/mubitosh/qrshare/qr_window.go:58
-msgid   "Connect to the same network as the device\nyou will be using to scan the QR code."
+#: src/github.com/mubitosh/qrshare/main_window.go:96
+msgid   "Select a file to share"
+msgstr  ""
+
+#: src/github.com/mubitosh/qrshare/main_window.go:102
+msgid   "Select"
+msgstr  ""
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:50
+msgid   "Network is not available"
 msgstr  ""
 
