@@ -5,9 +5,9 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>QR Share</name>
-  <summary>Single click file sharing</summary>
+  <summary>Quick and easy file sharing</summary>
   <description>
-    <p>Share file as below:</p>
+    <p>Share files and folders as below:</p>
     <ol>
       <li>Open Files application and select files and folders to share</li>
       <li>Right click and select QR Share</li>
@@ -16,9 +16,22 @@
     <p>To stop sharing click the Stop Sharing button</p>
     <p>The shared link can be accessed by anyone in the same network using a web browser.</p>
   </description>
-  <url type="homepage">github.com/mubitosh/qrshare</url>
-  <url type="bugtracker">github.com/mubitosh/qrshare/issues</url>
-  <developer_name>Santosh Heigrujam</developer_name>
+  <provides>
+    <binary>com.github.mubitosh.qrshare</binary>
+  </provides>
+  <releases>
+    <release version="1.0.0" date="2017-12-3">
+      <description>
+        <ul>
+          <li>Show shared URL in QR code window</li>
+          <li>Share multiple files and folders</li>
+          <li>Pretty listing of shared files and folders</li>
+          <li>Use icons from default elementary theme</li>
+          <li>Explicit stop sharing by clicking Stop sharing button instead of automatic stop after inactivity</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
   <screenshots>
     <screenshot type="default">
         <image>https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-app.png</image>
@@ -30,9 +43,9 @@
         <image>https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-shared-link-1.png</image>
     </screenshot>
   </screenshots>
-  <provides>
-    <binary>com.github.mubitosh.qrshare</binary>
-  </provides>
+  <developer_name>Santosh Heigrujam</developer_name>
+  <url type="homepage">github.com/mubitosh/qrshare</url>
+  <url type="bugtracker">github.com/mubitosh/qrshare/issues</url>
   <custom>
     <value key="x-appcenter-color-primary">#ea9b6e</value>
     <value key="x-appcenter-color-primary-text">rgb(255, 255, 255)</value>
