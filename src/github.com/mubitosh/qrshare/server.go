@@ -76,8 +76,6 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 
 	absPath = getAbsPath(app.files)
 
-	log.Println("abs path:", absPath)
-
 	mux := http.NewServeMux()
 
 	// Serve shared files under path sharedPath
@@ -95,7 +93,6 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 
 	fs.Server.Handler = mux
 
-	log.Println("Starting file sharing")
 	return fs.Serve(tcpKeepAliveListener{fs.listener.(*net.TCPListener)})
 }
 
