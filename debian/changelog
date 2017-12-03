@@ -1,3 +1,9 @@
+com.github.mubitosh.qrshare (1.0.1) xenial; urgency=medium
+
+  * Use correct appstream id com.github.mubitosh.qrshare.desktop
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Mon, 4 Dec 2017 00:04:00 +0530
+
 com.github.mubitosh.qrshare (1.0.0) xenial; urgency=medium
 
   * Show shared URL in QR code window
