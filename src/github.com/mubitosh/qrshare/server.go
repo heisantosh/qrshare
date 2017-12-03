@@ -76,6 +76,8 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 
 	absPath = getAbsPath(app.files)
 
+	log.Println("abs path:", absPath)
+
 	mux := http.NewServeMux()
 
 	// Serve shared files under path sharedPath
@@ -97,7 +99,7 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 	return fs.Serve(tcpKeepAliveListener{fs.listener.(*net.TCPListener)})
 }
 
-// getParentDir returns the parent directory of the given file.
+// getAbsPath returns the absolute path of parent directory of the given file.
 func getAbsPath(names []string) string {
 	p := names[0]
 
@@ -105,10 +107,6 @@ func getAbsPath(names []string) string {
 	if !path.IsAbs(p) {
 		c, _ := os.Getwd()
 		p = path.Join(c, p)
-	}
-
-	if len(names) == 1 {
-		return p
 	}
 
 	return path.Dir(p)
@@ -184,9 +182,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 		// If path is root, filter files not in app.files.
 		if _, ok := rootSelectedFiles[fStat.Name()]; !ok &&
 			// http.StripPrefix removes / also. Need to check for that.
-			(r.URL.Path == "/" || r.URL.Path == "") &&
-			// It's okay if there is only one directory is to be served.
-			len(rootSelectedFiles) != 1 {
+			(r.URL.Path == "/" || r.URL.Path == "") {
 			continue
 		}
 
