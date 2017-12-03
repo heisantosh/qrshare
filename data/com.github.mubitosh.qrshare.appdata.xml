@@ -9,10 +9,12 @@
   <description>
     <p>Share file as below:</p>
     <ol>
-      <li>Right click on file to share and select QR Share</li>
-      <li>Download the file by scanning the QR code image</li>
+      <li>Open Files application and select files and folders to share</li>
+      <li>Right click and select QR Share</li>
+      <li>Scan the QR code image or go to the link provided to access the shared files</li>
     </ol>
-    <p>To stop sharing click the Stop Sharing button or it will stop sharing automagically after sometime.</p>
+    <p>To stop sharing click the Stop Sharing button</p>
+    <p>The shared link can be accessed by anyone in the same network using a web browser.</p>
   </description>
   <url type="homepage">github.com/mubitosh/qrshare</url>
   <url type="bugtracker">github.com/mubitosh/qrshare/issues</url>
@@ -23,6 +25,9 @@
     </screenshot>
     <screenshot>
         <image>https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-qr-window.png</image>
+    </screenshot>
+    <screenshot>
+        <image>https://raw.githubusercontent.com/mubitosh/qrshare/master/data/screenshot-shared-link-1.png</image>
     </screenshot>
   </screenshots>
   <provides>
