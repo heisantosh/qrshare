@@ -105,7 +105,7 @@ func selectFiles(window *gtk.Window) []string {
 	if response == int(gtk.RESPONSE_ACCEPT) {
 		list, err := chooser.GetFilenames()
 		if err != nil {
-			log.Println("Error:", err)
+			log.Println("Error getting selected filenames:", err)
 		} else {
 			list.Foreach(func(ptr unsafe.Pointer) {
 				files = append(files, C.GoString((*C.char)(ptr)))
@@ -114,11 +114,6 @@ func selectFiles(window *gtk.Window) []string {
 		list.Free()
 	}
 	chooser.Destroy()
-
-	log.Println("Selected", len(files), "files:")
-	for _, s := range files {
-		log.Println(s)
-	}
 
 	return files
 }
