@@ -132,8 +132,6 @@ func qrWindowNew(app *QrShare) *gtk.ApplicationWindow {
 	styleCtx, _ := urlLabel.GetStyleContext()
 	styleCtx.AddClass("h3")
 
-	log.Println("URL:", url)
-
 	image, _ := gtk.ImageNewFromFile(app.image)
 	image.SetMarginStart(12)
 	image.SetMarginEnd(12)

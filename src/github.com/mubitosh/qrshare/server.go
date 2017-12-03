@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
@@ -58,6 +59,8 @@ func fileServerNew() (*fileServer, error) {
 	return fs, nil
 }
 
+var absPath string
+
 func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error {
 	rootSelectedFiles = make(map[string]bool)
 	for _, s := range app.files {
@@ -70,7 +73,7 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 		return err
 	}
 
-	ap := getAbsPath(app.files)
+	absPath = getAbsPath(app.files)
 
 	mux := http.NewServeMux()
 
@@ -81,9 +84,9 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 				// Because there might be only one file to be served at the root.
 				// Joining a URL path / at the end of a filename will make the
 				// filepath a directory name.
-				serve(w, r, ap)
+				serve(w, r, absPath)
 			} else {
-				serve(w, r, path.Join(ap, path.Clean(r.URL.Path)))
+				serve(w, r, path.Join(absPath, path.Clean(r.URL.Path)))
 			}
 		})))
 
@@ -152,20 +155,16 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	}
 
 	fis := fileInfo{
-		Name:       "",
+		Name:       strings.TrimPrefix(f.Name(), absPath),
 		ChildFiles: []fileInfo{},
 		ChildDirs:  []fileInfo{},
-	}
-
-	// If not at root of sharing, url path should equal to relative file path.
-	if r.URL.Path != "/" {
-		fis.Name = r.URL.Path
 	}
 
 	// TODO: Sort the filenames
 	// I think the slice return from os.Readdir is sorted already.
 
 	for _, fStat := range fStats {
+		// Skip hidden files.
 		if fStat.Name()[0] == '.' {
 			continue
 		}
@@ -182,7 +181,8 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 		if fStat.IsDir() {
 			fis.ChildDirs = append(fis.ChildDirs, fileInfo{Name: fStat.Name(), Icon: iconFolder})
 		} else {
-			fis.ChildFiles = append(fis.ChildFiles, fileInfo{Name: fStat.Name(), Icon: iconText})
+			icon := getIcon(path.Join(f.Name(), fStat.Name()))
+			fis.ChildFiles = append(fis.ChildFiles, fileInfo{Name: fStat.Name(), Icon: icon})
 		}
 	}
 
@@ -205,6 +205,9 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
 	http.ServeFile(w, r, filePath)
 }
+
+// TODO: Move the templates into a separate file.
+// Add templates for internal eerror , not found etc.
 
 var listingHTML = `<html>
 
