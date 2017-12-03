@@ -20,7 +20,7 @@
     <binary>com.github.mubitosh.qrshare</binary>
   </provides>
   <releases>
-    <release version="1.0.0" date="2017-12-3">
+    <release version="1.0.1" date="2017-12-4">
       <description>
         <ul>
           <li>Show shared URL in QR code window</li>
