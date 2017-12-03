@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gotk3/gotk3/gtk"
 
+	"fmt"
 	"html/template"
 	"log"
 	"net"
@@ -117,8 +118,16 @@ func getAbsPath(names []string) string {
 func serve(w http.ResponseWriter, r *http.Request, filePath string) {
 	f, err := os.Open(filePath)
 	if err != nil {
+		if os.IsNotExist(err) {
+			log.Println("Requested non existent file:", err)
+			w.WriteHeader(http.StatusNotFound)
+			fmt.Fprint(w, notFoundHTML)
+			return
+		}
+
 		log.Println("Error opening file:", err)
-		http.Error(w, "StatusInternalServerError", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, internalErrorHTML)
 		return
 	}
 
@@ -127,7 +136,8 @@ func serve(w http.ResponseWriter, r *http.Request, filePath string) {
 	fStat, err := f.Stat()
 	if err != nil {
 		log.Println("Error getting file info:", err)
-		http.Error(w, "StatusInternalServerError", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, internalErrorHTML)
 		return
 	}
 
@@ -138,7 +148,8 @@ func serve(w http.ResponseWriter, r *http.Request, filePath string) {
 
 	if (fStat.Mode() &^ 07777) == os.ModeSocket {
 		log.Println("file is a socket: not serving it")
-		http.Error(w, "StatusForbidden", http.StatusForbidden)
+		w.WriteHeader(http.StatusNotFound) // maybe status forbidden??
+		fmt.Fprint(w, notFoundHTML)
 		return
 	}
 
@@ -150,7 +161,8 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	fStats, err := f.Readdir(-1)
 	if err != nil {
 		log.Println("Error reading directory:", err)
-		http.Error(w, "StatusInternalServerError", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, internalErrorHTML)
 		return
 	}
 
@@ -189,14 +201,16 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	tpl, err := template.New("t").Parse(listingHTML)
 	if err != nil {
 		log.Println("Error parsing template:", err)
-		http.Error(w, "StatusInternalServerError", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, internalErrorHTML)
 		return
 	}
 
 	err = tpl.Execute(w, fis)
 	if err != nil {
 		log.Println("Error executing template:", err)
-		http.Error(w, "StatusInternalServerError", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, internalErrorHTML)
 		return
 	}
 }
@@ -205,80 +219,3 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
 	http.ServeFile(w, r, filePath)
 }
-
-// TODO: Move the templates into a separate file.
-// Add templates for internal eerror , not found etc.
-
-var listingHTML = `<html>
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style type="text/css">
-        a:hover,
-        a:visited,
-        a:link,
-        a:active {
-            text-decoration: none!important;
-            -webkit-box-shadow: none!important;
-            box-shadow: none!important;
-        }
-        
-        .file {
-            width: 80px;
-            word-wrap: break-word;
-            display: inline-block;
-            margin: 10px;
-            vertical-align: top;
-        }
-        
-        .icon {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 5px;
-        }
-        
-        .icon-image {
-            max-width: 100%;
-        }
-        
-        .file-name {
-            text-align: center;
-            color: black;
-        	font-family: "Arial";
-        	font-size: small;
-        	color: rgb(80, 80, 80)
-        }
-    </style>
-</head>
-
-<body>
-    <div>
-
-        {{$name := .Name}} 
-
-        {{range .ChildDirs}}
-        <div class="file">
-            <a class="file-url" href="{{$name}}/{{.Name}}">
-                <div class="icon">
-                    <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
-                </div>
-                <div class="file-name">{{.Name}}</div>
-            </a>
-        </div>
-        {{end}} 
-
-        {{range .ChildFiles}}
-        <div class="file">
-            <a class="file-url" href="{{$name}}/{{.Name}}">
-                <div class="icon">
-                    <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
-                </div>
-                <div class="file-name">{{.Name}}</div>
-            </a>
-        </div>
-        {{end}}
-
-    </div>
-</body>
-
-</html>`
