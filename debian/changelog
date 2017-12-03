@@ -1,3 +1,13 @@
+com.github.mubitosh.qrshare (1.0.0) xenial; urgency=medium
+
+  * Show shared URL in QR code window
+  * Share multiple files and folders
+  * Pretty listing of shared files and folders
+  * Use icons from default elementary theme
+  * Explicit stop sharing by clicking Stop sharing button instead of automatic stop after inactivity
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Sun, 4 Dec 2017 20:59:00 +0530
+
 com.github.mubitosh.qrshare (0.7.8) xenial; urgency=medium
 
   * Use dark them when started from right click in Files
