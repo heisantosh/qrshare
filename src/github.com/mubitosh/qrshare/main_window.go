@@ -14,7 +14,7 @@ import (
 
 // mainWindowNew returns Granite Welcome screen style window.
 func mainWindowNew(qrshare *QrShare) *gtk.ApplicationWindow {
-	titleLabel, _ := gtk.LabelNew(T("Share files or folders"))
+	titleLabel, _ := gtk.LabelNew(T("Share files and folders"))
 	styleCtx, _ := titleLabel.GetStyleContext()
 	styleCtx.AddClass("h1")
 	titleLabel.SetJustify(gtk.JUSTIFY_CENTER)
