@@ -4,7 +4,6 @@ Priority: extra
 Maintainer: Santosh Heigrujam <santosh.hei@gmail.com>
 Build-Depends: debhelper (>= 9),
                libgtk-3-dev,
-               contractor,
                meson,
                golang-go,
                gb

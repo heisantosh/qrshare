@@ -27,7 +27,7 @@ You can download the latest release of the app from [here](https://github.com/mu
 ### Install dependencies
 
 ```bash
-$ sudo apt install libgtk-3-dev meson golang-go gb contractor
+$ sudo apt install libgtk-3-dev meson golang-go gb
 ```
 
 ### Building & Installing
