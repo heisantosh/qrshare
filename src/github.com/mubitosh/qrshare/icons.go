@@ -78,6 +78,10 @@ func textFileIcon(name string) string {
 		iconName = "text-x-credits"
 	case "Makefile":
 		iconName = "text-x-cmake"
+	case "meson.build":
+		iconName = "text-x-meson"
+	//case "LICENSE":
+	//	iconName = ""
 	}
 
 	if iconName != "" {
