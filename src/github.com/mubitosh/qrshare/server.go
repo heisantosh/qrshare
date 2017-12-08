@@ -46,7 +46,8 @@ type fileServer struct {
 // Map of selected files provided as command line args to the application.
 var rootSelectedFiles map[string]bool
 
-var sharedPath = "/"
+// Don't forget to add / at the end of the prefix path!
+var sharedPath = "/files/"
 
 func fileServerNew() (*fileServer, error) {
 	fs := &fileServer{}
@@ -81,14 +82,7 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 	// Serve shared files under path sharedPath
 	mux.Handle(sharedPath, http.StripPrefix(sharedPath,
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if path.Clean(r.URL.Path) == "/" {
-				// Because there might be only one file to be served at the root.
-				// Joining a URL path / at the end of a filename will make the
-				// filepath a directory name.
-				serve(w, r, absPath)
-			} else {
-				serve(w, r, path.Join(absPath, path.Clean(r.URL.Path)))
-			}
+			serve(w, r, path.Join(absPath, path.Clean(r.URL.Path)))
 		})))
 
 	fs.Server.Handler = mux
@@ -162,7 +156,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	}
 
 	fis := fileInfo{
-		Name:       strings.TrimPrefix(f.Name(), absPath),
+		Name:       path.Join(sharedPath, strings.TrimPrefix(f.Name(), absPath)),
 		ChildFiles: []fileInfo{},
 		ChildDirs:  []fileInfo{},
 	}
@@ -179,7 +173,8 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 		// If path is root, filter files not in app.files.
 		if _, ok := rootSelectedFiles[fStat.Name()]; !ok &&
 			// http.StripPrefix removes / also. Need to check for that.
-			(r.URL.Path == "/" || r.URL.Path == "") {
+			(r.URL.Path == "/" || r.URL.Path == "") &&
+			len(rootSelectedFiles) > 1 {
 			continue
 		}
 
