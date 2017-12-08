@@ -48,6 +48,8 @@ var rootSelectedFiles map[string]bool
 
 // Don't forget to add / at the end of the prefix path!
 var sharedPath = "/files/"
+var downloadPath = "/download/"
+var textPath = "/text/"
 
 func fileServerNew() (*fileServer, error) {
 	fs := &fileServer{}
@@ -209,6 +211,6 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 
 // serveFile serves a file using standard library http.ServeFile.
 func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
-	w.Header().Set("Content-Disposition", "filename=" + path.Base(filePath))
+	w.Header().Set("Content-Disposition", "filename="+path.Base(filePath))
 	http.ServeFile(w, r, filePath)
 }
