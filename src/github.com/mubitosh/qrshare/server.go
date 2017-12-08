@@ -209,5 +209,6 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 
 // serveFile serves a file using standard library http.ServeFile.
 func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
+	w.Header().Set("Content-Disposition", "filename=" + path.Base(filePath))
 	http.ServeFile(w, r, filePath)
 }
