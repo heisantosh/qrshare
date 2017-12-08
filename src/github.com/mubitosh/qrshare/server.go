@@ -100,6 +100,10 @@ func getAbsPath(names []string) string {
 		p = path.Join(c, p)
 	}
 
+	if len(names) == 1 {
+		return names[0]
+	}
+
 	return path.Dir(p)
 }
 
