@@ -32,7 +32,7 @@ func genQRCode(qrImage, port string) (string, error) {
 		return "", err
 	}
 
-	url := "http://" + ipAddr + ":" + port + sharedPath
+	url := "http://" + ipAddr + ":" + port + filesRoute
 
 	log.Println("URL to share:", url)
 

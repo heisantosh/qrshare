@@ -3,13 +3,18 @@ package main
 import (
 	"github.com/gotk3/gotk3/gtk"
 
+	"archive/zip"
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"io"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 	"time"
 )
@@ -47,9 +52,8 @@ type fileServer struct {
 var rootSelectedFiles map[string]bool
 
 // Don't forget to add / at the end of the prefix path!
-var sharedPath = "/files/"
-var downloadPath = "/download/"
-var textPath = "/text/"
+var filesRoute = "/files/"
+var zipRoute = "/zip/"
 
 func fileServerNew() (*fileServer, error) {
 	fs := &fileServer{}
@@ -81,11 +85,15 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 
 	mux := http.NewServeMux()
 
-	// Serve shared files under path sharedPath
-	mux.Handle(sharedPath, http.StripPrefix(sharedPath,
+	// Serve shared files under path filesRoute
+	mux.Handle(filesRoute, http.StripPrefix(filesRoute,
 		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			serve(w, r, path.Join(absPath, path.Clean(r.URL.Path)))
+			serveFiles(w, r, path.Join(absPath, path.Clean(r.URL.Path)))
 		})))
+
+	mux.HandleFunc(zipRoute, func(w http.ResponseWriter, r *http.Request) {
+		serveZip(w, r)
+	})
 
 	fs.Server.Handler = mux
 
@@ -110,7 +118,7 @@ func getAbsPath(names []string) string {
 }
 
 // serve serves a file or directory request with the given file path.
-func serve(w http.ResponseWriter, r *http.Request, filePath string) {
+func serveFiles(w http.ResponseWriter, r *http.Request, filePath string) {
 	f, err := os.Open(filePath)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -162,7 +170,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	}
 
 	fis := fileInfo{
-		Name:       path.Join(sharedPath, strings.TrimPrefix(f.Name(), absPath)),
+		Name:       path.Join(filesRoute, strings.TrimPrefix(f.Name(), absPath)),
 		ChildFiles: []fileInfo{},
 		ChildDirs:  []fileInfo{},
 	}
@@ -213,4 +221,79 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
 	w.Header().Set("Content-Disposition", "filename="+path.Base(filePath))
 	http.ServeFile(w, r, filePath)
+}
+
+//serveZip sends back a zipped file of the requested files.
+func serveZip(w http.ResponseWriter, r *http.Request) {
+	fnames := make([]string, 0)
+
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Println("Error reading request body:", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, internalErrorHTML)
+		return
+	}
+
+	err = json.Unmarshal(b, &fnames)
+	if err != nil {
+		log.Println("Error unmarshaling request body:", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprint(w, internalErrorHTML)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/zip")
+	w.Header().Set("Content-Disposition", "filename=shared.zip")
+
+	zw := zip.NewWriter(w)
+	defer zw.Close()
+
+	for _, fname := range fnames {
+		inpath := path.Join(absPath, fname)
+		bp := filepath.Dir(inpath)
+
+		log.Println("File to zip:", inpath)
+		log.Println("Base dir:", bp)
+
+		err := filepath.Walk(inpath, func(fp string, fi os.FileInfo, err error) error {
+			if err != nil || fi.IsDir() {
+				if err != nil {
+					log.Println("walking err:", err)
+				}
+				return err
+			}
+
+			rp, err := filepath.Rel(bp, fp)
+			if err != nil {
+				return err
+			}
+
+			ap := path.Join(filepath.SplitList(rp)...)
+
+			f, err := os.Open(fp)
+			if err != nil {
+				return err
+			}
+
+			defer func() {
+				f.Close()
+			}()
+
+			fw, err := zw.Create(ap)
+			if err != nil {
+				return err
+			}
+
+			_, err = io.Copy(fw, f)
+			return err
+		})
+
+		if err != nil {
+			log.Printf("Error adding file %s to zip: %v\n", fname, err)
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprint(w, internalErrorHTML)
+			return
+		}
+	}
 }
