@@ -276,9 +276,7 @@ func serveZip(w http.ResponseWriter, r *http.Request) {
 				return err
 			}
 
-			defer func() {
-				f.Close()
-			}()
+			defer f.Close()
 
 			fw, err := zw.Create(ap)
 			if err != nil {
