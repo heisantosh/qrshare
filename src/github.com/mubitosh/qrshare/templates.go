@@ -85,19 +85,18 @@ var internalErrorHTML = `<!DOCTYPE html>
 	<meta charset='utf-8'>
 	<title>Not found</title>
 	<style type="text/css">
-		#header-404 {
+		#header-500 {
             text-align: center;
             color: black;
             font-size: 2em;
         	font-family: "Arial";
         	color: rgb(80, 80, 80)
         }
-		}
 	</style>
 </head>
 <body>
 <div>
-	<div id="header-404">
+	<div id="header-500">
 		<i>"Something is not right</i>
 		<br>
 		<i>Stop the share and try sharing again"</i>
@@ -121,7 +120,6 @@ var notFoundHTML = `<!DOCTYPE html>
         	font-family: "Arial";
         	color: rgb(80, 80, 80)
         }
-		}
 	</style>
 </head>
 <body>
