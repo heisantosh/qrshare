@@ -40,8 +40,7 @@ func (ln tcpKeepAliveListener) Accept() (c net.Conn, err error) {
 	return tc, nil
 }
 
-// fileServer serves a file on a random port number. It shuts down if there
-// is no download from the server within a period of time.
+// fileServer serves a file on a random port number.
 type fileServer struct {
 	http.Server
 	port     int
@@ -223,7 +222,11 @@ func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
 	http.ServeFile(w, r, filePath)
 }
 
-//serveZip sends back a zipped file of the requested files.
+// serveZip sends back a zipped file of the requested files.
+// The requested files are received in the request as an array of strings.
+// The zip file is streamed directly to the client instead of creating a local
+// zip file and sending it over to the client. This avoids using up space on the
+// server side.
 func serveZip(w http.ResponseWriter, r *http.Request) {
 	fnames := make([]string, 0)
 
