@@ -40,7 +40,41 @@ var listingHTML = `<!DOCTYPE html>
             color: black;
         	font-family: "Arial";
         	font-size: small;
-        	color: rgb(80, 80, 80)
+        	color: rgb(80, 80, 80);
+        }
+
+        .img-wrap {
+            position: relative;
+            display: inline-block;
+            font-size: 0;
+        }
+        
+        .img-wrap .checkbox-round {
+            position: absolute;
+            top: -2px;
+            left: -8px;
+            z-index: 5;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            text-align: center;
+            width: 1.3em;
+            height: 1.3em;
+            background-color: gray;
+            border-radius: 50%;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+            -webkit-appearance: none;
+            outline: none;
+        }
+        
+        .img-wrap:hover .checkbox-round {
+            opacity: 1;
+        }
+        
+        .checkbox-round:checked {
+            background-color: #F36B13;
+            opacity: 1;
         }
     </style>
 </head>
@@ -54,7 +88,10 @@ var listingHTML = `<!DOCTYPE html>
         <div class="file">
             <a class="file-url" href="{{$name}}/{{.Name}}">
                 <div class="icon">
-                    <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
+                    <div class="img-wrap">
+                        <input type="checkbox" name="" class="checkbox-round">
+                        <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
+                    </div>
                 </div>
                 <div class="file-name">{{.Name}}</div>
             </a>
@@ -65,7 +102,10 @@ var listingHTML = `<!DOCTYPE html>
         <div class="file">
             <a class="file-url" href="{{$name}}/{{.Name}}">
                 <div class="icon">
-                    <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
+                    <div class="img-wrap">
+                        <input type="checkbox" name="" class="checkbox-round">
+                        <img class="icon-image" src="data:image/svg+xml;base64,{{.Icon}}">
+                    </div>
                 </div>
                 <div class="file-name">{{.Name}}</div>
             </a>

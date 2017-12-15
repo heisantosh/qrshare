@@ -228,8 +228,6 @@ func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
 // zip file and sending it over to the client. This avoids using up space on the
 // server side.
 func serveZip(w http.ResponseWriter, r *http.Request) {
-	fnames := make([]string, 0)
-
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Println("Error reading request body:", err)
@@ -237,6 +235,8 @@ func serveZip(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, internalErrorHTML)
 		return
 	}
+
+	fnames := make([]string, 0)
 
 	err = json.Unmarshal(b, &fnames)
 	if err != nil {
