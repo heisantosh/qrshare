@@ -257,7 +257,7 @@ func serveZip(w http.ResponseWriter, r *http.Request) {
 	for _, fname := range fnames {
 		fname = strings.TrimPrefix(fname, filesRoute)
 		inpath := path.Join(absPath, fname) // file to add to zip
-		bp := filepath.Dir(inpath) // base path
+		bp := filepath.Dir(inpath)          // base path
 
 		err := filepath.Walk(inpath, func(fp string, fi os.FileInfo, err error) error {
 			if err != nil || fi.IsDir() {
