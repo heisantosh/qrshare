@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -228,17 +227,20 @@ func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
 // zip file and sending it over to the client. This avoids using up space on the
 // server side.
 func serveZip(w http.ResponseWriter, r *http.Request) {
-	b, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		log.Println("Error reading request body:", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprint(w, internalErrorHTML)
+	r.ParseForm()
+	s := r.Form["selected-files"]
+	if len(s) == 0 {
+		log.Println("Request does not have selected files to download")
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprint(w, notFoundHTML)
 		return
 	}
 
+	log.Println("Selected files to download:", s[0])
+
 	fnames := make([]string, 0)
 
-	err = json.Unmarshal(b, &fnames)
+	err := json.Unmarshal([]byte(s[0]), &fnames)
 	if err != nil {
 		log.Println("Error unmarshaling request body:", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -253,11 +255,9 @@ func serveZip(w http.ResponseWriter, r *http.Request) {
 	defer zw.Close()
 
 	for _, fname := range fnames {
-		inpath := path.Join(absPath, fname)
-		bp := filepath.Dir(inpath)
-
-		log.Println("File to zip:", inpath)
-		log.Println("Base dir:", bp)
+		fname = strings.TrimPrefix(fname, filesRoute)
+		inpath := path.Join(absPath, fname) // file to add to zip
+		bp := filepath.Dir(inpath) // base path
 
 		err := filepath.Walk(inpath, func(fp string, fi os.FileInfo, err error) error {
 			if err != nil || fi.IsDir() {
