@@ -44,8 +44,8 @@
     </screenshot>
   </screenshots>
   <developer_name>Santosh Heigrujam</developer_name>
-  <url type="homepage">github.com/mubitosh/qrshare</url>
-  <url type="bugtracker">github.com/mubitosh/qrshare/issues</url>
+  <url type="homepage">https://github.com/mubitosh/qrshare</url>
+  <url type="bugtracker">https://github.com/mubitosh/qrshare/issues</url>
   <custom>
     <value key="x-appcenter-color-primary">rgb(204,75,20)</value>
     <value key="x-appcenter-color-primary-text">rgb(255, 255, 255)</value>
