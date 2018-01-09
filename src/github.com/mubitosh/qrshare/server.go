@@ -5,6 +5,7 @@ import (
 
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -45,10 +46,6 @@ type fileServer struct {
 // Map of selected files provided as command line args to the application.
 var rootSelectedFiles map[string]bool
 
-// Don't forget to add / at the end of the prefix path!
-var webRoute = "/web/"     // Route to access via web browser
-var filesRoute = "/files/" // Route to access using Files application
-
 func fileServerNew() (*fileServer, error) {
 	fs := &fileServer{}
 	fs.Server.Addr = ":"
@@ -80,12 +77,9 @@ func (fs *fileServer) start(app *QrShare, qrWindow *gtk.ApplicationWindow) error
 	mux := http.NewServeMux()
 
 	// Handle traffic for web browser access
-	mux.Handle(webRoute, http.StripPrefix(webRoute,
-		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			serveFiles(w, r, path.Join(absPath, path.Clean(r.URL.Path)))
-		})))
-
-	// Handle traffic for Files access
+	mux.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		serveFiles(w, r, path.Join(absPath, path.Clean(r.URL.Path)))
+	}))
 
 	fs.Server.Handler = mux
 
@@ -137,7 +131,7 @@ func serveFiles(w http.ResponseWriter, r *http.Request, filePath string) {
 	}
 
 	if fStat.IsDir() {
-		serveDir(w, r, f)
+		serveDir(w, r, filePath)
 		return
 	}
 
@@ -152,8 +146,8 @@ func serveFiles(w http.ResponseWriter, r *http.Request, filePath string) {
 }
 
 // serveDir serves a directory content.
-func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
-	fStats, err := f.Readdir(-1)
+func serveDir(w http.ResponseWriter, r *http.Request, filePath string) {
+	fStats, err := ioutil.ReadDir(filePath)
 	if err != nil {
 		log.Println("Error reading directory:", err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -162,13 +156,14 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	}
 
 	fis := fileInfo{
-		Name:       path.Join(webRoute, strings.TrimPrefix(f.Name(), absPath)),
+		Name:       strings.TrimPrefix(filePath, absPath),
 		ChildFiles: []fileInfo{},
 		ChildDirs:  []fileInfo{},
 	}
 
-	// TODO: Sort the filenames
-	// I think the slice return from os.Readdir is sorted already.
+	if fis.Name != "" {
+		fis.Name = "/" + fis.Name
+	}
 
 	for _, fStat := range fStats {
 		// Skip hidden files.
@@ -187,7 +182,7 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 		if fStat.IsDir() {
 			fis.ChildDirs = append(fis.ChildDirs, fileInfo{Name: fStat.Name(), Icon: iconFolder})
 		} else {
-			icon := getIcon(path.Join(f.Name(), fStat.Name()))
+			icon := getIcon(path.Join(filePath, fStat.Name()))
 			fis.ChildFiles = append(fis.ChildFiles, fileInfo{Name: fStat.Name(), Icon: icon})
 		}
 	}
@@ -209,7 +204,6 @@ func serveDir(w http.ResponseWriter, r *http.Request, f *os.File) {
 	}
 }
 
-// serveFile serves a file using standard library http.ServeFile.
 func serveFile(w http.ResponseWriter, r *http.Request, filePath string) {
 	w.Header().Set("Content-Disposition", "filename="+path.Base(filePath))
 	http.ServeFile(w, r, filePath)
