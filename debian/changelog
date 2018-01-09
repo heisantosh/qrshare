@@ -1,3 +1,11 @@
+com.github.mubitosh.qrshare (1.1.0) xenial; urgency=medium
+
+  * List files and directories sorted by name in alphabetical order
+  * Direct download/stream when a single file is shared
+  * Add missing https protocal in URL in appstream metadata
+
+ -- Santosh Heigrujam <santosh.hei@gmail.com>  Tue, 9 Jan 2018 11:59:00 +0530
+
 com.github.mubitosh.qrshare (1.0.1) xenial; urgency=medium
 
   * Use correct appstream id com.github.mubitosh.qrshare.desktop

@@ -20,14 +20,12 @@
     <binary>com.github.mubitosh.qrshare</binary>
   </provides>
   <releases>
-    <release version="1.0.1" date="2017-12-4">
+    <release version="1.1.0" date="2018-01-09">
       <description>
         <ul>
-          <li>Show shared URL in QR code window</li>
-          <li>Share multiple files and folders</li>
-          <li>Pretty listing of shared files and folders</li>
-          <li>Use icons from default elementary theme</li>
-          <li>Explicit stop sharing by clicking Stop sharing button instead of automatic stop after inactivity</li>
+          <li>List files and directories sorted by name in alphabetical order</li>
+          <li>Direct download/stream when a single file is shared</li>
+          <li>Bug fixes</li>
         </ul>
       </description>
     </release>
