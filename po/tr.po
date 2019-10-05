@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid   ""
+msgstr  "Project-Id-Version: com.github.mubitosh.qrshare\n"
+        "Report-Msgid-Bugs-To: EMAIL\n"
+        "POT-Creation-Date: 2017-12-03 21:45+0530\n"
+        "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+        "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+        "Language-Team: LANGUAGE <LL@li.org>\n"
+        "Language: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=CHARSET\n"
+        "Content-Transfer-Encoding: 8bit\n"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:33
+msgid   "Click here to select files or folders for sharing"
+msgstr  "Dosyaları veya klasörleri paylaşmak için buraya tıkla"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:36
+msgid   "Right click in Files application"
+msgstr  "Dosyalar uygulamasında sağ klik yap"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:37
+msgid   "Select files and folders and select the QR Share option"
+msgstr  "Dosyaları ve klasörleri seç ve QR Paylaşma seçeneğini seç"
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:50
+msgid   "Network is not available"
+msgstr  "Ağ mevcut değil"
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:66
+msgid   "Network Settings..."
+msgstr  "Ağ Ayarları..."
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:141
+msgid   "Stop Sharing"
+msgstr  "Paylaşmayı Durdur"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:17
+msgid   "Share files and folders"
+msgstr  "Dosyaları ve klasörleri paylaş"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:23
+msgid   "Use any of the options below to share\n"
+        "Scan the QR code to download"
+msgstr  "Paylaşmak için aşağıdaki herhangi bir seçeneği kullanın"
+		"İndirmek için QR kodu tara"
+#: src/github.com/mubitosh/qrshare/main_window.go:32
+msgid   "Select files or folders"
+msgstr  "Dosyaları veya klasörleri seç"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:96
+msgid   "Select files or folders to share"
+msgstr  "Paylaşmak için dosyaları veya klasörleri seç"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:101
+msgid   "Cancel"
+msgstr  "İptal"
+
+#: src/github.com/mubitosh/qrshare/main_window.go:102
+msgid   "Select"
+msgstr  "Seç"
+
+#: src/github.com/mubitosh/qrshare/qr_window.go:59
+msgid   "Connect to the same network as the device\n"
+        "you will be using to scan the QR code."
+msgstr  "Cihazla aynı olan ağa bağlan\n"
+		"QR kodu taramak için kullanacaksın"
